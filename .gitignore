@@ -125,3 +125,5 @@ target/
 /bin
 
 .DS_Store
+
+/mqttconnections

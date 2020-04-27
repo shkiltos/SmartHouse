@@ -3,6 +3,7 @@ package com.anton.smarthouse.services;
 import com.anton.smarthouse.devices.Device;
 import com.anton.smarthouse.devices.OnOffDevice;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,10 @@ import java.util.concurrent.ConcurrentMap;
 
 @Service
 public class DeviceService {
+
+    public static final String brokerURL = "tcp://localhost:1883";
+
+    public static final String dataStore = "mqttconnections";
 
     public static final ConcurrentMap<String, List<Device>> userDevices = new ConcurrentHashMap<>();
 

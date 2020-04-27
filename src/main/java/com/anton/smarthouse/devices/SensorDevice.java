@@ -1,8 +1,12 @@
 package com.anton.smarthouse.devices;
 
 import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
 import java.util.UUID;
+
+import static com.anton.smarthouse.services.DeviceService.brokerURL;
+import static com.anton.smarthouse.services.DeviceService.dataStore;
 
 public class SensorDevice implements Device {
     private String topic;
@@ -12,8 +16,8 @@ public class SensorDevice implements Device {
     public SensorDevice(String topic) {
         this.topic = topic;
         try {
-            String subscriberId = UUID.randomUUID().toString();
-            this.client = new MqttClient("tcp://localhost:1883", subscriberId);
+            String clientId = UUID.randomUUID().toString();
+            this.client = new MqttClient(brokerURL, clientId, new MqttDefaultFilePersistence(dataStore));
 
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);

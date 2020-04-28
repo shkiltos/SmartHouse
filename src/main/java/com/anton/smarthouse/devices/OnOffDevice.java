@@ -56,12 +56,12 @@ public class OnOffDevice implements Device {
 //        receivedSignal.await(10, TimeUnit.MINUTES);
     }
 
-    public String publish() throws MqttException {
+    public String publish(String str) throws MqttException {
         if (!client.isConnected()) {
             System.out.println("[I31] Client not connected.");
             return null;
         }
-        MqttMessage msg = new MqttMessage("temperature = 28".getBytes());
+        MqttMessage msg = new MqttMessage(str.getBytes());
         msg.setQos(0);
 //        msg.setRetained(true);
         client.publish(topic, msg);

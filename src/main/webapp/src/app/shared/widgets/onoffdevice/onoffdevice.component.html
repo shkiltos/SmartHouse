@@ -1,0 +1,14 @@
+<div class="text">
+    <h4>{{ name }}</h4>
+
+    <span class="topic">topic: {{ topic }}</span>
+
+    <div class="button-group">
+        <div>Device is turned {{state ? 'on': 'off'}}</div>
+        <mat-icon [style.color]="state? 'green' : 'black'" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
+    </div>
+    <!-- <span> some text </span> -->
+</div>
+<div class="widget">
+    
+</div>

@@ -2,10 +2,9 @@ package com.anton.smarthouse.controllers;
 
 import com.anton.smarthouse.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -18,9 +17,15 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping(value = "/turnOn")
-    public String turnOn() {
-        deviceService.turnOnDevice();
+    @GetMapping(value = "/init")
+    public String init() {
+        deviceService.initDevices();
         return "turned on";
+    }
+
+    @PostMapping("/switchDevice")
+    public boolean switchDevice(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
+        deviceService.switchDevice(message);
+        return true;
     }
 }

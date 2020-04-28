@@ -22,7 +22,22 @@ public class DeviceService {
 
     public DeviceService() {}
 
-    public void turnOnDevice() {
+    public void switchDevice(String msg) {
+        Device d = userDevices.get("anton@mail.com").get(0);
+        if (d instanceof OnOffDevice) {
+            OnOffDevice onOffDevice = (OnOffDevice)d;
+            try {
+                onOffDevice.publish(msg);
+            } catch (MqttException e) {
+                System.out.println("publish error");
+            }
+        } else {
+            System.out.println("cast error");
+        }
+
+    }
+
+    public void initDevices() {
         List<Device> deviceList = new ArrayList<>();
         userDevices.put("anton@mail.com", deviceList);
 

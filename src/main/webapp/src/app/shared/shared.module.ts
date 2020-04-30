@@ -21,6 +21,7 @@ import { CardComponent } from './widgets/card/card.component';
 import { PieComponent } from './widgets/pie/pie.component';
 import { OnoffdeviceComponent } from './widgets/onoffdevice/onoffdevice.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SensorComponent } from './widgets/sensor/sensor.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     AreaComponent,
     CardComponent,
     PieComponent,
-    OnoffdeviceComponent
+    OnoffdeviceComponent,
+    SensorComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,8 @@ import { HttpClientModule } from '@angular/common/http';
     AreaComponent,
     CardComponent,
     PieComponent,
-    OnoffdeviceComponent
+    OnoffdeviceComponent,
+    SensorComponent
   ],
   providers: [
     DeviceService

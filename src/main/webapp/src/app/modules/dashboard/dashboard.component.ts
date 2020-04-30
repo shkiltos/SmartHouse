@@ -7,12 +7,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  state: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.state = false;
+    
   }
 
 }

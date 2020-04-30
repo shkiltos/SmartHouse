@@ -1,14 +1,14 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px" class="stats-cards">
     <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Lamp" topic="wemos/led" [state]="state"></app-widget-onoffdevice>
+        <app-widget-onoffdevice name="Lamp in the hall" image="bulb.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
     </mat-card>
     <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Lamp" topic="wemos/led" [state]="state"></app-widget-onoffdevice>
+        <app-widget-sensor name="Temperature in the hall" image="temperature.svg" topic="wemos/led" data="23" dimension="˚C"></app-widget-sensor>
     </mat-card>
     <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Lamp" topic="wemos/led" [state]="state"></app-widget-onoffdevice>
+        <app-widget-onoffdevice name="Ventilation" image="ventilation.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
     </mat-card>
     <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Lamp" topic="wemos/led" [state]="state"></app-widget-onoffdevice>
+        <app-widget-onoffdevice name="Security system" image="lock a.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
     </mat-card>
 </div>

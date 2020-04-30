@@ -6,10 +6,11 @@
         <img style="float: right;" class="device-image" [src]="imageURL" [alt]="name">
     </span>
     
-    <div>turned {{state ? 'on': 'off'}}</div>
+    <br>
+    <br>
 
     <div class="button-group">
-        <mat-icon [style.color]="state? 'green' : 'black'" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
+        <span class="indication">{{data}} {{dimension}}</span>
     </div>
 </div>
 <div class="widget">

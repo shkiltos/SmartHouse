@@ -2,15 +2,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DeviceService } from '../../services/device.service';
 
 @Component({
-  selector: 'app-widget-onoffdevice',
-  templateUrl: './onoffdevice.component.html',
-  styleUrls: ['./onoffdevice.component.scss']
+  selector: 'app-widget-sensor',
+  templateUrl: './sensor.component.html',
+  styleUrls: ['./sensor.component.scss']
 })
-export class OnoffdeviceComponent implements OnInit {
+export class SensorComponent implements OnInit {
   @Input() name: string;
   @Input() topic: string;
   @Input() image: string;
-  @Input() state: boolean;
+  @Input() data: boolean;
+  @Input() dimension: boolean;
 
 
   imageURL: string;
@@ -21,13 +22,7 @@ export class OnoffdeviceComponent implements OnInit {
     this.imageURL =  '../../../../assets/icons/' + this.image;
   }
 
-
-  toggle() {
-    this.state = !this.state;
-    if (this.state) {
-      this.deviceService.switch('0');
-    } else {
-      this.deviceService.switch('1');
-    }
+  update() {
+    
   }
 }

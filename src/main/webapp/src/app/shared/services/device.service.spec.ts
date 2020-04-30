@@ -4,7 +4,6 @@ import { DeviceService } from './device.service';
 
 describe('DeviceService', () => {
   let service: DeviceService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(DeviceService);

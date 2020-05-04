@@ -1,10 +1,10 @@
 <mat-nav-list>
     <div class="profile-card">
         <div class="header">
-            <h2>Anton Shkilevich</h2>
-            <h4>example@email.com</h4>
+            <h2>{{this.userService.user.name}}</h2>
+            <h4>{{this.userService.user.email}}</h4>
         </div>
-        <img src="https://sun9-50.userapi.com/c850532/v850532822/16593a/upbQsloduyo.jpg?ava=1" alt="Anton Shkilevich">
+        <img [src]="this.userService.user.picture" alt="Anton Shkilevich">
     </div>
 
     <mat-divider></mat-divider>

@@ -23,6 +23,5 @@ export class SensorComponent implements OnInit {
   }
 
   update() {
-    
   }
 }

@@ -1,6 +1,8 @@
 package com.anton.smarthouse.controllers;
 
+import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.services.DeviceService;
+import com.anton.smarthouse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +11,15 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/api")
 class MainController {
+    private final UserService userService;
 
     @Autowired
-    public MainController() {}
+    public MainController(UserService userService) {this.userService = userService;}
 
-//    @GetMapping(value = "/user")
-//    public User getUser() {
-//        return userService.getUser();
-//    }
+    @GetMapping(value = "/user")
+    public UserEntity getUser() {
+        return userService.getUser();
+    }
 
     @GetMapping(value = "/health")
     public ResponseEntity<String> healthCheck() {

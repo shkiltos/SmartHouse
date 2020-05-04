@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 
 import { DeviceService } from 'src/app/shared/services/device.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -59,7 +60,8 @@ import { SensorComponent } from './widgets/sensor/sensor.component';
     SensorComponent
   ],
   providers: [
-    DeviceService
+    DeviceService,
+    UserService
   ]
 })
 export class SharedModule { }

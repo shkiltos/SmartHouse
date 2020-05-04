@@ -1,8 +1,20 @@
+server:
+  port: 8080
+
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            clientId: github-client-id
-            clientSecret: github-client-secret
+  data:
+    mongodb:
+      database:  SmartHouseDB
+      port: 27017
+
+security:
+  oauth2:
+    client:
+      clientId: 208160806819-k0i4g1fhop0t0q4efisqrhu3pnd7m4dn.apps.googleusercontent.com
+      clientSecret: eG9NKxvA1PaV9YWI2rVl5wQD
+      clientAuthenticationScheme: form
+      scope: openid,email,profile
+      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    resource.userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+    resource.preferTokenInfo: true

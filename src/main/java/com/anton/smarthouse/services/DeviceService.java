@@ -2,8 +2,11 @@ package com.anton.smarthouse.services;
 
 import com.anton.smarthouse.devices.Device;
 import com.anton.smarthouse.devices.OnOffDevice;
+import com.anton.smarthouse.model.DeviceEntity;
+import com.anton.smarthouse.repository.DeviceRepository;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,10 +23,13 @@ public class DeviceService {
 
     public static final ConcurrentMap<String, List<Device>> userDevices = new ConcurrentHashMap<>();
 
-    public DeviceService() {}
+    private final DeviceRepository deviceRepository;
+
+    @Autowired
+    public DeviceService(DeviceRepository deviceRepository) {this.deviceRepository = deviceRepository;}
 
     public void switchDevice(String msg) {
-        Device d = userDevices.get("anton@mail.com").get(0);
+        Device d = userDevices.get("toha.srednii@gmail.com").get(0);
         if (d instanceof OnOffDevice) {
             OnOffDevice onOffDevice = (OnOffDevice)d;
             try {
@@ -39,7 +45,7 @@ public class DeviceService {
 
     public void initDevices() {
         List<Device> deviceList = new ArrayList<>();
-        userDevices.put("anton@mail.com", deviceList);
+        userDevices.put("toha.srednii@gmail.com", deviceList);
 
         try {
             OnOffDevice onOffDevice = new OnOffDevice(false, "wemos/led");
@@ -47,11 +53,15 @@ public class DeviceService {
 //            onOffDevice.publish();
             deviceList.add(onOffDevice);
 
-            System.out.println(userDevices.get("anton@mail.com"));
+            System.out.println(userDevices.get("toha.srednii@gmail.com"));
         } catch (MqttException | InterruptedException e) {
 //            e.printStackTrace();
             System.out.println("error");
         }
+    }
+
+    public List<DeviceEntity> getUserDevices(String userName) {
+        return deviceRepository.findDeviceEntitiesByUserName(userName);
     }
 
 }

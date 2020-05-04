@@ -20,11 +20,18 @@ dependencies {
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.2'
+	annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.0.RELEASE')
 
 	// https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3
 	compile group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.2.0'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.2.6.RELEASE'
 }
 
 test {

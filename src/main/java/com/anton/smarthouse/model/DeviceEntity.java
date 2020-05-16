@@ -11,12 +11,13 @@ import java.util.List;
 @Data
 public class DeviceEntity {
     @Id
-    private String deviceId;
+    private String id;
     private String name;
-    @Field("userName")
-    private String userName;
+    private String userId;
     private String topic;
+    private String type;
     private String state;
+    private String description;
     private String data;
     private List<String> recentData;
 }

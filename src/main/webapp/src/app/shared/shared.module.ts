@@ -23,6 +23,14 @@ import { PieComponent } from './widgets/pie/pie.component';
 import { OnoffdeviceComponent } from './widgets/onoffdevice/onoffdevice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SensorComponent } from './widgets/sensor/sensor.component';
+import { EditDialogComponent } from './dialogs/edit/edit.dialog.component';
+import { AddDialogComponent } from './dialogs/add/add.dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete/delete.dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,7 +41,10 @@ import { SensorComponent } from './widgets/sensor/sensor.component';
     CardComponent,
     PieComponent,
     OnoffdeviceComponent,
-    SensorComponent
+    SensorComponent,
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +58,14 @@ import { SensorComponent } from './widgets/sensor/sensor.component';
     MatMenuModule,
     MatListModule,
     RouterModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSnackBarModule
   ],
   exports: [
     HeaderComponent,
@@ -58,6 +76,11 @@ import { SensorComponent } from './widgets/sensor/sensor.component';
     PieComponent,
     OnoffdeviceComponent,
     SensorComponent
+  ],
+  entryComponents: [
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
   providers: [
     DeviceService,

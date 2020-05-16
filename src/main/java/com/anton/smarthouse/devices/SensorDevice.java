@@ -1,5 +1,6 @@
 package com.anton.smarthouse.devices;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
@@ -8,6 +9,7 @@ import java.util.UUID;
 import static com.anton.smarthouse.services.DeviceService.brokerURL;
 import static com.anton.smarthouse.services.DeviceService.dataStore;
 
+@Slf4j
 public class SensorDevice implements Device {
     private String topic;
     private String value;
@@ -26,9 +28,9 @@ public class SensorDevice implements Device {
             client.connect(options);
 
         } catch (MqttSecurityException e) {
-            System.out.println("error mqtt security");
+            log.error("error mqtt security");
         } catch (MqttException e) {
-            System.out.println("error mqtt");
+            log.error("error mqtt");
         }
     }
 
@@ -45,7 +47,7 @@ public class SensorDevice implements Device {
 
         client.subscribe(this.topic, (topic, msg) -> {
             byte[] payload = msg.getPayload();
-            System.out.println(String.format("[I46] Message received: topic=" + topic + ", payload=" + new String(payload)));
+            log.info(String.format("Message received: topic=" + topic + ", payload=" + new String(payload)));
 //            receivedSignal.countDown();
         });
 //        receivedSignal.await(10, TimeUnit.MINUTES);
@@ -53,7 +55,7 @@ public class SensorDevice implements Device {
 
     public String publish() throws MqttException {
         if (!client.isConnected()) {
-            System.out.println("[I31] Client not connected.");
+            log.error("Client not connected.");
             return null;
         }
         MqttMessage msg = new MqttMessage("temperature = 28".getBytes());

@@ -22,4 +22,11 @@ export class HeaderComponent implements OnInit {
     }, 300);
   }
 
+  refresh() {
+    window.location.href = '/login';
+  }
+
+  logout() {
+    window.location.href = '/logout';
+  }
 }

@@ -1,14 +1,48 @@
-<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px" class="stats-cards">
-    <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Lamp in the hall" image="bulb.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
+  
+<ng-template #onoffdeviceRef let-onoffdevice>
+    <mat-card fxFlex="25" class="card">
+        <app-widget-onoffdevice [name]="onoffdevice.name" image="bulb.svg" [topic]="onoffdevice.topic" [state]="onoffdevice.state"></app-widget-onoffdevice>
     </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-sensor name="Temperature in the hall" image="temperature.svg" topic="wemos/led" data="23" dimension="˚C"></app-widget-sensor>
+</ng-template>
+<ng-template #sensorRef let-sensor>
+    <mat-card fxFlex="25" class="card">
+        <app-widget-sensor [name]="sensor.name" image="temperature.svg" [topic]="sensor.topic" [data]="sensor.data" dimension="˚C"></app-widget-sensor>
     </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Ventilation" image="ventilation.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-onoffdevice name="Security system" image="lock a.svg" topic="wemos/led" [state]="false"></app-widget-onoffdevice>
-    </mat-card>
+</ng-template>
+
+<div *ngFor="let device of devices; let i=index">
+
+    
+    <div *ngIf="i % 4 == 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="cards-row">
+        <!-- <p> -->
+        <ng-template [ngTemplateOutlet]="(
+                        ( ( devices[i].type === 'onoffdevice' ) && onoffdeviceRef ) ||
+                        ( ( devices[i].type === 'sensor' ) && sensorRef )
+                    )"
+                    [ngTemplateOutletContext]="{ $implicit: devices[i] }">
+        </ng-template>
+        <ng-template *ngIf="i + 1 < devices.length"
+                    [ngTemplateOutlet]="(
+                        ( ( devices[i + 1].type === 'onoffdevice' ) && onoffdeviceRef ) ||
+                        ( ( devices[i + 1].type === 'sensor' ) && sensorRef )
+                    )"
+                    [ngTemplateOutletContext]="{ $implicit: devices[i + 1] }">
+        </ng-template>
+        <ng-template *ngIf="i + 2 < devices.length"
+                    [ngTemplateOutlet]="(
+                        ( ( devices[i + 2].type === 'onoffdevice' ) && onoffdeviceRef ) ||
+                        ( ( devices[i + 2].type === 'sensor' ) && sensorRef )
+                    )"
+                    [ngTemplateOutletContext]="{ $implicit: devices[i + 2] }">
+        </ng-template>
+        <ng-template *ngIf="i + 3 < devices.length"
+                    [ngTemplateOutlet]="(
+                        ( ( devices[i + 3].type === 'onoffdevice' ) && onoffdeviceRef ) ||
+                        ( ( devices[i + 3].type === 'sensor' ) && sensorRef )
+                    )"
+                    [ngTemplateOutletContext]="{ $implicit: devices[i + 3] }">
+        </ng-template>
+    <!-- </p> -->
+    </div>
+
 </div>

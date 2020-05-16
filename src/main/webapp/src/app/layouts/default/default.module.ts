@@ -11,11 +11,17 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule} from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DevicesComponent } from 'src/app/modules/devices/devices.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     DefaultComponent,
+    DevicesComponent,
     DashboardComponent,
     ReportsComponent
   ],
@@ -28,7 +34,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     DashboardService

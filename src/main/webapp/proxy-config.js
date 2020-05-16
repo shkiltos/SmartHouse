@@ -4,7 +4,8 @@ const PROXY_CONFIG = [
         "/api",
         "/login",
         "/logout",
-        "/api/user"
+        "/api/user",
+        "/api/devices"
       ],
       secure: false,
       target: {

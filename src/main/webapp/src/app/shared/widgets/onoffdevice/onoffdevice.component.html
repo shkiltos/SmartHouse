@@ -1,15 +1,15 @@
 <div class="text">
-    <h4>{{ name }}</h4>
+    <h4>{{ device.name }}</h4>
 
     <span class="topic">
-        topic: {{ topic }} 
-        <img style="float: right;" class="device-image" [src]="imageURL" [alt]="name">
+        topic: {{ device.topic }} 
+        <img style="float: right;" class="device-image" [src]="imageURL" [alt]="device.name">
     </span>
     
-    <div>turned {{state ? 'on': 'off'}}</div>
+    <div>turned {{device.state ? 'on': 'off'}}</div>
 
     <div class="button-group">
-        <mat-icon [style.color]="state? 'green' : 'black'" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
+        <mat-icon [style.color]="device.state !== '0'? 'green' : 'black'" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
     </div>
 </div>
 <div class="widget">

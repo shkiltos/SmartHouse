@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DeviceService } from '../../services/device.service';
+import { IDevice } from '../../model/device';
 
 @Component({
   selector: 'app-widget-sensor',
@@ -7,10 +8,8 @@ import { DeviceService } from '../../services/device.service';
   styleUrls: ['./sensor.component.scss']
 })
 export class SensorComponent implements OnInit {
-  @Input() name: string;
-  @Input() topic: string;
+  @Input() device: IDevice;
   @Input() image: string;
-  @Input() data: boolean;
   @Input() dimension: boolean;
 
 

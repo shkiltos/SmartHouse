@@ -1,12 +1,12 @@
   
 <ng-template #onoffdeviceRef let-onoffdevice>
-    <mat-card fxFlex="25" class="card">
-        <app-widget-onoffdevice [name]="onoffdevice.name" image="bulb.svg" [topic]="onoffdevice.topic" [state]="onoffdevice.state"></app-widget-onoffdevice>
+    <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
+        <app-widget-onoffdevice [device]="onoffdevice" image="bulb.svg"></app-widget-onoffdevice>
     </mat-card>
 </ng-template>
 <ng-template #sensorRef let-sensor>
-    <mat-card fxFlex="25" class="card">
-        <app-widget-sensor [name]="sensor.name" image="temperature.svg" [topic]="sensor.topic" [data]="sensor.data" dimension="˚C"></app-widget-sensor>
+    <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
+        <app-widget-sensor [device]="sensor" image="temperature.svg" dimension="˚C"></app-widget-sensor>
     </mat-card>
 </ng-template>
 

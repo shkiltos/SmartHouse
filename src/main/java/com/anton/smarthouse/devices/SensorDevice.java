@@ -1,8 +1,10 @@
 package com.anton.smarthouse.devices;
 
+import com.anton.smarthouse.services.DeviceService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
@@ -11,11 +13,16 @@ import static com.anton.smarthouse.services.DeviceService.dataStore;
 
 @Slf4j
 public class SensorDevice implements Device {
+    private String id;
     private String topic;
-    private String value;
+    private String data;
     private IMqttClient client;
 
-    public SensorDevice(String topic) {
+    private final DeviceService deviceService;
+
+    public SensorDevice(String id, String topic, DeviceService deviceService) {
+        this.deviceService = deviceService;
+        this.id = id;
         this.topic = topic;
         try {
             String clientId = UUID.randomUUID().toString();
@@ -42,15 +49,22 @@ public class SensorDevice implements Device {
         this.topic = value;
     }
 
-    public void subscribe() throws MqttException, InterruptedException {
-//        CountDownLatch receivedSignal = new CountDownLatch(1);
+    public String getId() {
+        return this.id;
+    }
 
+    public void subscribe() throws MqttException{
         client.subscribe(this.topic, (topic, msg) -> {
-            byte[] payload = msg.getPayload();
-            log.info(String.format("Message received: topic=" + topic + ", payload=" + new String(payload)));
-//            receivedSignal.countDown();
+            String payload = new String(msg.getPayload());
+            log.info(String.format("Message received: topic=" + topic + ", payload=" + payload));
+            updateData(payload);
         });
-//        receivedSignal.await(10, TimeUnit.MINUTES);
+    }
+
+    private void updateData(String payload) {
+        this.data = payload;
+        this.deviceService.updateData(this.id, payload);
+        log.info("Updated data for " + this.id + " to " + this.data);
     }
 
     public String publish() throws MqttException {

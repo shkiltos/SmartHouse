@@ -57,19 +57,44 @@ public class DeviceService {
         deviceRepository.deleteById(deviceId);
     }
 
-    public void switchDevice(String msg) {
-        Device d = userDevices.get("toha.srednii@gmail.com").get(0);
-        if (d instanceof OnOffDevice) {
-            OnOffDevice onOffDevice = (OnOffDevice) d;
-            try {
-                onOffDevice.publish(msg);
-            } catch (MqttException e) {
-                log.error("publish error");
+    public boolean sendMessage(UserEntity user, String deviceId, String msg) {
+        Optional<Device> device = userDevices.get(user.getEmail()).stream().filter(d -> d.getId().equals(deviceId)).findFirst();
+        if(device.isPresent()) {
+            if (device.get() instanceof OnOffDevice) {
+                OnOffDevice onOffDevice = (OnOffDevice) device.get();
+                try {
+                    onOffDevice.publish(msg);
+                    return true;
+                } catch (MqttException e) {
+                    log.error("publish error");
+                }
+            } else {
+                log.error("cast error");
             }
-        } else {
-            log.error("cast error");
         }
+        return false;
+    }
 
+    public boolean updateData(String deviceId, String data) {
+        Optional<DeviceEntity> deviceOptional = findById(deviceId);
+        if (!deviceOptional.isPresent()) return false;
+        DeviceEntity device = deviceOptional.get();
+        device.setData(data);
+        deviceRepository.save(device);
+        return true;
+    }
+
+    public boolean updateState(String deviceId, String state) {
+        Optional<DeviceEntity> deviceOptional = findById(deviceId);
+        if (!deviceOptional.isPresent()) return false;
+        DeviceEntity device = deviceOptional.get();
+        device.setState(state);
+        deviceRepository.save(device);
+        return true;
+    }
+
+    public boolean hasConnection(UserEntity user) {
+        return this.userDevices.containsKey(user.getEmail());
     }
 
     public void initDevices(UserEntity user, List<DeviceEntity> devices) {
@@ -78,17 +103,17 @@ public class DeviceService {
             try {
                 switch (device.getType()) {
                     case "onoffdevice": {
-                        OnOffDevice onOffDevice = new OnOffDevice(device.getState().equals("0") ? false : true, device.getTopic());
+                        OnOffDevice onOffDevice = new OnOffDevice(device.getId(), device.getState(), device.getTopic(), this);
                         onOffDevice.subscribe();
                         deviceList.add(onOffDevice);
-                        log.info("Added onoffdevice " + device.getName() + " for " + user.getEmail());
+                        log.info("Added onoffdevice: \"" + device.getName() + "\" for " + user.getEmail());
                         break;
                     }
                     case "sensor": {
-                        SensorDevice sensorDevice = new SensorDevice(device.getTopic());
+                        SensorDevice sensorDevice = new SensorDevice(device.getId(), device.getTopic(), this);
                         sensorDevice.subscribe();
                         deviceList.add(sensorDevice);
-                        log.info("Added sensor " + device.getName() + " for " + user.getEmail());
+                        log.info("Added sensor: \"" + device.getName() + "\" for " + user.getEmail());
                         break;
                     }
                 }
@@ -97,12 +122,10 @@ public class DeviceService {
 //                onOffDevice.publish();
 //                deviceList.add(onOffDevice);
             } catch (MqttException | InterruptedException e) {
-//            e.printStackTrace();
-                log.info("init failed for device " + device.getName());
+                log.error("init failed for device " + device.getName());
             }
         }
 
         userDevices.put(user.getEmail(), deviceList);
     }
-
 }

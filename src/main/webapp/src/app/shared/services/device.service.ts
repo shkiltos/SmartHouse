@@ -3,37 +3,39 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IDevice } from '../model/device';
 
+const baseUrl = '/api/devices';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
 
-  // dataChange: BehaviorSubject<IDevice[]> = new BehaviorSubject<IDevice[]>([]);
   dialogData: any;
-
-  baseUrl = '/api/devices';
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
-  // get data(): IDevice[] {
-  //   return this.dataChange.value;
-  // }
+  hasConnection() {
+    return this.http.get<boolean>(baseUrl + '/hasConnection');
+  }
+
+  init() {
+    return this.http.get<String>(baseUrl + '/init');
+  }
 
   getDialogData() {
     return this.dialogData;
   }
 
   getDevices() {
-    return this.http.get<IDevice[]>(this.baseUrl);
+    return this.http.get<IDevice[]>(baseUrl);
   }
 
   getDeviceById(id: string) {
-    return this.http.get<IDevice>(this.baseUrl + '/' + id);
+    return this.http.get<IDevice>(baseUrl + '/' + id);
   }
 
   createDevice(device: IDevice) {
-    this.http.post(this.baseUrl, device).subscribe(data => {
+    this.http.post(baseUrl, device).subscribe(data => {
       this.dialogData = device;
       this.snackBar.open('Successfully added', 'OK', {
         duration: 2000,
@@ -47,7 +49,7 @@ export class DeviceService {
   }
 
   updateDevice(device: IDevice) {
-    this.http.put(this.baseUrl + '/' + device.id, device).subscribe(data => {
+    this.http.put(baseUrl + '/' + device.id, device).subscribe(data => {
       this.dialogData = device;
       this.snackBar.open('Successfully edited', 'OK', {
         duration: 2000,
@@ -62,7 +64,7 @@ export class DeviceService {
   }
 
   deleteDevice(id: string) {
-    return this.http.delete(this.baseUrl + '/' + id).subscribe( () => {
+    return this.http.delete(baseUrl + '/' + id).subscribe( () => {
       this.snackBar.open('Successfully deleted', 'OK', {
         duration: 2000,
       });
@@ -75,9 +77,7 @@ export class DeviceService {
     );
   }
 
-  switch(msg: string) {
-    this.http.post<boolean>('/api/devices/switchDevice?deviceId=' + 1 + '&msg=' + msg, {}).toPromise().then(data => {
-      console.log(data);
-    });
+  publishMessage(deviceId: string, msg: string) {
+    return this.http.post<String>(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {});
   }
 }

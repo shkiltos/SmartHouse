@@ -24,6 +24,13 @@ public class DeviceController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "/hasConnection")
+    public boolean hasConnection() {
+        UserEntity user = userService.getUser();
+        if (user == null) return false;
+        return deviceService.hasConnection(user);
+    }
+
     @GetMapping(value = "/init")
     public ResponseEntity<String> init() {
         UserEntity user = userService.getUser();
@@ -66,10 +73,11 @@ public class DeviceController {
         deviceService.delete(deviceId);
     }
 
-    @PostMapping("/switchDevice")
-    public boolean switchDevice(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
-        deviceService.switchDevice(message);
-        return true;
+    @PostMapping("/publishMessage")
+    public ResponseEntity<String> publishMessage(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
+        UserEntity user = userService.getUser();
+        if (user == null) return ResponseEntity.notFound().build();
+        return deviceService.sendMessage(user, deviceId, message) ? ResponseEntity.ok().body(message) : ResponseEntity.badRequest().build();
     }
 
     @GetMapping(value = "/refreshUserDevices")

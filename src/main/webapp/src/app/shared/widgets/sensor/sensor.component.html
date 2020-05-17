@@ -1,16 +1,16 @@
 <div class="text">
-    <h4>{{ name }}</h4>
+    <h4>{{ device.name }}</h4>
 
     <span class="topic">
-        topic: {{ topic }} 
-        <img style="float: right;" class="device-image" [src]="imageURL" [alt]="name">
+        topic: {{ device.topic }} 
+        <img style="float: right;" class="device-image" [src]="imageURL" [alt]="device.name">
     </span>
     
     <br>
     <br>
 
     <div class="button-group">
-        <span class="indication">{{data}} {{dimension}}</span>
+        <span class="indication">{{device.data}} {{dimension}}</span>
     </div>
 </div>
 <div class="widget">

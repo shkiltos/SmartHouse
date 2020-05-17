@@ -6,3 +6,8 @@
 .cards-row {
     padding-bottom: 2rem;
 }
+
+.disabledItem {
+    pointer-events: none;
+    opacity: 0.4;
+}

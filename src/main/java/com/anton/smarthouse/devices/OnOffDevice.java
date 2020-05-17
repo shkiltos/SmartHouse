@@ -1,6 +1,7 @@
 package com.anton.smarthouse.devices;
 
 import com.anton.smarthouse.EngineTemperatureSensor;
+import com.anton.smarthouse.services.DeviceService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
@@ -14,11 +15,16 @@ import static com.anton.smarthouse.services.DeviceService.dataStore;
 
 @Slf4j
 public class OnOffDevice implements Device {
+    public String id;
     private String topic;
-    private boolean state;
+    private String state;
     private IMqttClient client;
 
-    public OnOffDevice(boolean state, String topic) {
+    private final DeviceService deviceService;
+
+    public OnOffDevice(String id, String state, String topic, DeviceService deviceService) {
+        this.deviceService = deviceService;
+        this.id = id;
         this.state = state;
         this.topic = topic;
         try {
@@ -46,6 +52,10 @@ public class OnOffDevice implements Device {
         this.topic = value;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
     public void subscribe() throws MqttException, InterruptedException {
 //        CountDownLatch receivedSignal = new CountDownLatch(1);
 
@@ -66,7 +76,14 @@ public class OnOffDevice implements Device {
         msg.setQos(0);
 //        msg.setRetained(true);
         client.publish(topic, msg);
+        this.updateState(msg.toString());
 
         return msg.toString();
+    }
+
+    private void updateState(String msg) {
+        this.state = msg;
+        this.deviceService.updateState(this.id, this.state);
+        log.info("Updated state for " + this.id + " to " + this.state);
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DeviceService } from '../../services/device.service';
+import { IDevice } from '../../model/device';
 
 @Component({
   selector: 'app-widget-onoffdevice',
@@ -7,10 +8,8 @@ import { DeviceService } from '../../services/device.service';
   styleUrls: ['./onoffdevice.component.scss']
 })
 export class OnoffdeviceComponent implements OnInit {
-  @Input() name: string;
-  @Input() topic: string;
   @Input() image: string;
-  @Input() state: boolean;
+  @Input() device: IDevice;
 
 
   imageURL: string;
@@ -22,12 +21,15 @@ export class OnoffdeviceComponent implements OnInit {
   }
 
 
-  toggle() {
-    this.state = !this.state;
-    if (this.state) {
-      this.deviceService.switch('0');
+  toggle() { 
+    if (this.device.state === '0') {
+      this.deviceService.publishMessage(this.device.id, '1').subscribe( response => {
+        this.device.state = '1';
+      });
     } else {
-      this.deviceService.switch('1');
+      this.deviceService.publishMessage(this.device.id, '0').subscribe( response => {
+        this.device.state = '0';
+      });
     }
   }
 }

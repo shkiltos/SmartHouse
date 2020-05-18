@@ -59,11 +59,11 @@ public class OnOffDevice implements Device {
     public void subscribe() throws MqttException, InterruptedException {
 //        CountDownLatch receivedSignal = new CountDownLatch(1);
 
-        client.subscribe(this.topic, (topic, msg) -> {
-            byte[] payload = msg.getPayload();
-            log.info(String.format("Message received: topic=" + topic + ", payload=" + new String(payload)));
-//            receivedSignal.countDown();
-        });
+//        client.subscribe(this.topic, (topic, msg) -> {
+//            byte[] payload = msg.getPayload();
+//            log.info(String.format("Message received: topic=" + topic + ", payload=" + new String(payload)));
+////            receivedSignal.countDown();
+//        });
 //        receivedSignal.await(10, TimeUnit.MINUTES);
     }
 

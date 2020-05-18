@@ -6,7 +6,7 @@ import { DeviceService } from '../../services/device.service';
 @Component({
   selector: 'app-baza.dialog',
   templateUrl: './edit.dialog.html',
-  styleUrls: ['./edit.dialog.css']
+  styleUrls: ['./edit.dialog.scss']
 })
 export class EditDialogComponent {
 

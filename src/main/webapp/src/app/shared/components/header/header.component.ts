@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private themeService: ThemeService) { }
 
   ngOnInit() { }
 
@@ -28,5 +29,9 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     window.location.href = '/logout';
+  }
+
+  changeTheme() {
+    this.themeService.switchTheme();
   }
 }

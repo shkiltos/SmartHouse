@@ -21,7 +21,7 @@ export class OnoffdeviceComponent implements OnInit {
   }
 
 
-  toggle() { 
+  toggle() {
     if (this.device.state === '0') {
       this.deviceService.publishMessage(this.device.id, '1').subscribe( response => {
         this.device.state = '1';

@@ -14,7 +14,6 @@
 
     
     <div *ngIf="i % 4 == 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="cards-row">
-        <!-- <p> -->
         <ng-template [ngTemplateOutlet]="(
                         ( ( devices[i].type === 'onoffdevice' ) && onoffdeviceRef ) ||
                         ( ( devices[i].type === 'sensor' ) && sensorRef )
@@ -42,7 +41,6 @@
                     )"
                     [ngTemplateOutletContext]="{ $implicit: devices[i + 3] }">
         </ng-template>
-    <!-- </p> -->
     </div>
 
 </div>

@@ -7,14 +7,15 @@ import { IDevice } from '../../model/device';
 @Component({
   selector: 'app-add.dialog',
   templateUrl: './add.dialog.html',
-  styleUrls: ['./add.dialog.css']
+  styleUrls: ['./add.dialog.scss']
 })
 
 export class AddDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: IDevice,
-              public deviceService: DeviceService) { }
+              public deviceService: DeviceService,
+              ) { }
 
   formControl = new FormControl('', [
     Validators.required

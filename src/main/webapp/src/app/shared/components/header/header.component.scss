@@ -1,3 +1,15 @@
 ul li {
   list-style: none;
 }
+
+.menu {
+  text-align: center;
+}
+
+.menu:hover {
+  background: none;
+}
+
+.icon:hover {
+  fill: rgb(77, 77, 77);
+}

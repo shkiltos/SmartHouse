@@ -6,7 +6,7 @@ import { DeviceService } from '../../services/device.service';
 @Component({
   selector: 'app-delete.dialog',
   templateUrl: './delete.dialog.html',
-  styleUrls: ['./delete.dialog.css']
+  styleUrls: ['./delete.dialog.scss']
 })
 export class DeleteDialogComponent {
 

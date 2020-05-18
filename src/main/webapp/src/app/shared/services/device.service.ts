@@ -19,7 +19,7 @@ export class DeviceService {
   }
 
   init() {
-    return this.http.get<String>(baseUrl + '/init');
+    return this.http.get<string>(baseUrl + '/init');
   }
 
   getDialogData() {
@@ -78,6 +78,6 @@ export class DeviceService {
   }
 
   publishMessage(deviceId: string, msg: string) {
-    return this.http.post<String>(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {});
+    return this.http.post<string>(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {});
   }
 }

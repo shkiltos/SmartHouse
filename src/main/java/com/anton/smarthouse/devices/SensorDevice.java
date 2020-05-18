@@ -68,16 +68,17 @@ public class SensorDevice implements Device {
     }
 
     public String publish() throws MqttException {
-        if (!client.isConnected()) {
-            log.error("Client not connected.");
-            return null;
-        }
-        MqttMessage msg = new MqttMessage("temperature = 28".getBytes());
-        msg.setQos(0);
-        msg.setRetained(true);
-        client.publish(topic, msg);
-
-        return msg.toString();
+//        if (!client.isConnected()) {
+//            log.error("Client not connected.");
+//            return null;
+//        }
+//        MqttMessage msg = new MqttMessage("temperature = 28".getBytes());
+//        msg.setQos(0);
+//        msg.setRetained(true);
+//        client.publish(topic, msg);
+//
+//        return msg.toString();
+        return "message";
     }
 
 }

@@ -10,14 +10,15 @@ import { IDevice } from '../../model/device';
 export class OnoffdeviceComponent implements OnInit {
   @Input() image: string;
   @Input() device: IDevice;
+  @Input() theme: boolean;
 
 
-  imageURL: string;
+  imageName: string;
 
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.imageURL =  '../../../../assets/icons/' + this.image;
+    this.imageName =  '../../../../assets/icons/' + this.image;
   }
 
 

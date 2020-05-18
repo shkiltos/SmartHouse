@@ -11,14 +11,15 @@ export class SensorComponent implements OnInit {
   @Input() device: IDevice;
   @Input() image: string;
   @Input() dimension: boolean;
+  @Input() theme: boolean;
 
 
-  imageURL: string;
+  imageName: string;
 
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.imageURL =  '../../../../assets/icons/' + this.image;
+    this.imageName =  '../../../../assets/icons/' + this.image;
   }
 
   update() {

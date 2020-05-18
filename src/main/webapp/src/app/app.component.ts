@@ -29,10 +29,5 @@ export class AppComponent {
         this.overlay.classList.remove("alternative");
       }
     }
-    // if (this.overlay.classList.contains("alternative")) {
-    //   this.overlay.classList.remove("alternative");
-    // } else {
-    //   this.overlay.classList.add("alternative");
-    // }
   }
 }

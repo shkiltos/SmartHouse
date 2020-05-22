@@ -10,7 +10,6 @@
       </mat-form-field>
     </div>
 
-    <!--Textarea for demo purposes-->
     <div class="form">
       <mat-form-field color="primary">
         <textarea matInput #input rows="1" class="form-control" placeholder="Description" [(ngModel)]="data.description" name="description"></textarea>
@@ -18,23 +17,56 @@
       </mat-form-field>
     </div>
 
-    <!--Contains mat-hint for characters count and has maxLengt set-->
     <div class="form">
       <mat-form-field color="primary">
-        <input matInput #inputstate class="form-control" placeholder="Topic" [(ngModel)]="data.topic" name="topic" maxlength="10" required >
+        <input matInput #input class="form-control" placeholder="Topic" [(ngModel)]="data.topic" name="topic" required >
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-        <!-- <mat-hint align="end">{{inputstate.value?.length || 0}}/10</mat-hint> -->
       </mat-form-field>
     </div>
 
     <div class="form">
-        <mat-form-field color="primary">
-          <input matInput placeholder="Type" [(ngModel)]="data.type" name="type">
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select name="type" matInput [(value)]="data.type" required>
+          <mat-option *ngFor="let type of deviceTypes" [value]="type.value">
+            {{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!--clear useless data like dimension after changing to onoffdevice-->
+    <div class="form" *ngIf="data.type==='sensor'">
+      <mat-form-field>
+        <mat-select [(value)]="data.dimension" placeholder="Dimension">
+          <mat-option *ngFor="let dimension of dimensions" [value]="dimension">
+            {{dimension}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form" *ngIf="data.type==='onoffdevice'">
+      <mat-form-field color="primary">
+        <input matInput #input type="number" class="form-control" placeholder="Energy consumption (kw/h)" [(ngModel)]="data.energyConsumption" name="energyConsumption">
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form" *ngIf="data.type==='onoffdevice'">
+      <div fxLayout="row" class="full-width" fxLayoutGap="70px">
+        <mat-form-field fxFlex="50" class="full-width">
+          <input matInput #input placeholder="'On' signal" [(ngModel)]="onPartSwitchPattern" name="onPartSwitchPattern">
         </mat-form-field>
+      
+        <mat-form-field fxFlex="50" class="full-width">
+          <input matInput #input placeholder="'Off' signal" [(ngModel)]="offPartSwitchPattern" name="offPartSwitchPattern">
+        </mat-form-field>
+      </div>
     </div>
 
     <div mat-dialog-actions class="actions">
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid || !isValid()" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>
   </form>

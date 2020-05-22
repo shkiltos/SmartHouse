@@ -17,7 +17,10 @@ public class DeviceEntity {
     private String topic;
     private String type;
     private String state;
+    private String dimension;
+    private String switchPattern;
     private String description;
     private String data;
     private List<String> recentData;
+    private String energyConsumption;
 }

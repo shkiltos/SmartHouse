@@ -5,6 +5,9 @@ export interface IDevice {
     topic: string;
     type: string;
     state: string;
+    dimension: string;
     description: string;
     data: string;
+    switchPattern: string;
+    energyConsumption: string;
 }

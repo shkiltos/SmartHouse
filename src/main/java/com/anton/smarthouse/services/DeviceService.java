@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static com.anton.smarthouse.devices.OnOffDevice.DEFAULT_SWITCH_PATTERN;
+
 @Service
 @Slf4j
 public class DeviceService {
@@ -36,6 +38,7 @@ public class DeviceService {
 
     public DeviceEntity create(DeviceEntity device, String userId) {
         device.setUserId(userId);
+        if (device.getSwitchPattern() == null) device.setSwitchPattern(DEFAULT_SWITCH_PATTERN);
         return deviceRepository.save(device);
     }
 
@@ -50,6 +53,7 @@ public class DeviceService {
     public DeviceEntity update(String id, DeviceEntity device, String userId) {
         device.setId(id);
         device.setUserId(userId);
+        if (device.getSwitchPattern() == null) device.setSwitchPattern(DEFAULT_SWITCH_PATTERN);
         return deviceRepository.save(device);
     }
 
@@ -57,7 +61,7 @@ public class DeviceService {
         deviceRepository.deleteById(deviceId);
     }
 
-    public boolean sendMessage(UserEntity user, String deviceId, String msg) {
+    public boolean publishMessage(UserEntity user, String deviceId, String msg) {
         Optional<Device> device = userDevices.get(user.getEmail()).stream().filter(d -> d.getId().equals(deviceId)).findFirst();
         if(device.isPresent()) {
             if (device.get() instanceof OnOffDevice) {
@@ -106,14 +110,14 @@ public class DeviceService {
                         OnOffDevice onOffDevice = new OnOffDevice(device.getId(), device.getState(), device.getTopic(), this);
                         onOffDevice.subscribe();
                         deviceList.add(onOffDevice);
-                        log.info("Added onoffdevice: \"" + device.getName() + "\" for " + user.getEmail());
+                        log.info("Connected onoffdevice: \"" + device.getName() + "\" for " + user.getEmail());
                         break;
                     }
                     case "sensor": {
                         SensorDevice sensorDevice = new SensorDevice(device.getId(), device.getTopic(), this);
                         sensorDevice.subscribe();
                         deviceList.add(sensorDevice);
-                        log.info("Added sensor: \"" + device.getName() + "\" for " + user.getEmail());
+                        log.info("Connected sensor: \"" + device.getName() + "\" for " + user.getEmail());
                         break;
                     }
                 }

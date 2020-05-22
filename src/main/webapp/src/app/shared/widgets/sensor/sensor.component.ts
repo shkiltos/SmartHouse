@@ -10,7 +10,6 @@ import { IDevice } from '../../model/device';
 export class SensorComponent implements OnInit {
   @Input() device: IDevice;
   @Input() image: string;
-  @Input() dimension: boolean;
   @Input() theme: boolean;
 
 

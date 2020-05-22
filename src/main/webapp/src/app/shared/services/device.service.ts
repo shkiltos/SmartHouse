@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IDevice } from '../model/device';
 
 const baseUrl = '/api/devices';
+const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class DeviceService {
   }
 
   init() {
-    return this.http.get<string>(baseUrl + '/init');
+    return this.http.get<boolean>(baseUrl + '/init');
   }
 
   getDialogData() {
@@ -78,6 +79,24 @@ export class DeviceService {
   }
 
   publishMessage(deviceId: string, msg: string) {
-    return this.http.post<string>(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {});
+    return this.http.post(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {}, { headers, responseType: 'text'});
+  }
+
+  parsePatternOn(device: IDevice) {
+    if (device.switchPattern) {
+      if (device.switchPattern.split(':')[0]) {
+        return device.switchPattern.split(':')[0];
+      }
+    }
+    return '0';
+  }
+
+  parsePatternOff(device: IDevice) {
+    if (device.switchPattern) {
+      if (device.switchPattern.split(':')[1]) {
+        return device.switchPattern.split(':')[1];
+      }
+    }
+    return '1';
   }
 }

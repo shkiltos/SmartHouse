@@ -9,7 +9,7 @@
     <div>turned {{device.state ? 'on': 'off'}}</div>
 
     <div class="button-group">
-        <mat-icon [ngClass]="{'power-butt': device.state !== '0'}" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
+        <mat-icon [ngClass]="{'power-butt-on': device.state === onState}" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
     </div>
 </div>
 <div class="widget">

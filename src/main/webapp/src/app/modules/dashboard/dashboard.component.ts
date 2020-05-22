@@ -31,9 +31,11 @@ export class DashboardComponent implements OnInit {
         console.log('User has connection with dashboard devices');
         this.isDisabled = false;
       } else {
-        this.deviceService.init().subscribe( response => {
-          this.isDisabled = false;
-          console.log(response);
+        this.deviceService.init().subscribe( initSuccess => {
+          if (initSuccess) {
+            console.log('User has connection with dashboard devices');
+            this.isDisabled = false;
+          }
         });
       }
     });

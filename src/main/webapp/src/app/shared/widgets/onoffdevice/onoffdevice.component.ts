@@ -11,25 +11,28 @@ export class OnoffdeviceComponent implements OnInit {
   @Input() image: string;
   @Input() device: IDevice;
   @Input() theme: boolean;
-
+  onState: string;
+  offState: string;
 
   imageName: string;
 
-  constructor(private deviceService: DeviceService) { }
+  constructor(public deviceService: DeviceService) { }
 
   ngOnInit(): void {
     this.imageName =  '../../../../assets/icons/' + this.image;
+    this.onState = this.deviceService.parsePatternOn(this.device);
+    this.offState = this.deviceService.parsePatternOff(this.device);
   }
 
 
   toggle() {
-    if (this.device.state === '0') {
-      this.deviceService.publishMessage(this.device.id, '1').subscribe( response => {
-        this.device.state = '1';
+    if (this.device.state === this.offState || this.device.state === null) {
+      this.deviceService.publishMessage(this.device.id, this.onState).subscribe( response => {
+        this.device.state = this.onState;
       });
     } else {
-      this.deviceService.publishMessage(this.device.id, '0').subscribe( response => {
-        this.device.state = '0';
+      this.deviceService.publishMessage(this.device.id, this.offState).subscribe( response => {
+        this.device.state = this.offState;
       });
     }
   }

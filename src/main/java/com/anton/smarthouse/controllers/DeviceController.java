@@ -32,11 +32,11 @@ public class DeviceController {
     }
 
     @GetMapping(value = "/init")
-    public ResponseEntity<String> init() {
+    public boolean init() {
         UserEntity user = userService.getUser();
-        if (user == null) return ResponseEntity.notFound().build();
+        if (user == null) return false;
         deviceService.initDevices(user, deviceService.findAll(user.getId()));
-        return ResponseEntity.ok().body("init succeeded");
+        return true;
     }
 
     @GetMapping
@@ -77,7 +77,7 @@ public class DeviceController {
     public ResponseEntity<String> publishMessage(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
-        return deviceService.sendMessage(user, deviceId, message) ? ResponseEntity.ok().body(message) : ResponseEntity.badRequest().build();
+        return deviceService.publishMessage(user, deviceId, message) ? ResponseEntity.ok().body(message) : ResponseEntity.badRequest().build();
     }
 
     @GetMapping(value = "/refreshUserDevices")

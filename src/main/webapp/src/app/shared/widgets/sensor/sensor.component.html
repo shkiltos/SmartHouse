@@ -5,12 +5,12 @@
         topic: {{ device.topic }} 
         <img style="float: right;" class="device-image" [src]="imageName" [alt]="device.name">
     </span>
-    
+
     <br>
     <br>
 
     <div class="button-group">
-        <span class="indication">{{device.data}} {{dimension}}</span>
+        <span class="indication">{{device.data === null ? '0.0' : device.data}} {{device.dimension}}</span>
     </div>
 </div>
 <div class="widget">

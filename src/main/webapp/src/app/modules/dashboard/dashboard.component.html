@@ -6,7 +6,7 @@
 </ng-template>
 <ng-template #sensorRef let-sensor>
     <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
-        <app-widget-sensor [device]="sensor" image="temperature.svg" dimension="˚C" [theme]="themeService.alternativeTheme"></app-widget-sensor>
+        <app-widget-sensor [device]="sensor" image="temperature.svg" [theme]="themeService.alternativeTheme"></app-widget-sensor>
     </mat-card>
 </ng-template>
 

@@ -20,6 +20,8 @@ public class OnOffDevice implements Device {
     private String state;
     private IMqttClient client;
 
+    public static final String DEFAULT_SWITCH_PATTERN = "1:0";
+
     private final DeviceService deviceService;
 
     public OnOffDevice(String id, String state, String topic, DeviceService deviceService) {
@@ -84,6 +86,6 @@ public class OnOffDevice implements Device {
     private void updateState(String msg) {
         this.state = msg;
         this.deviceService.updateState(this.id, this.state);
-        log.info("Updated state for " + this.id + " to " + this.state);
+        log.info("Updated state for " + this.id + " : " + this.topic + " to " + this.state);
     }
 }

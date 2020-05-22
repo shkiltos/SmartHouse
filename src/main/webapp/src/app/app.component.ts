@@ -21,12 +21,12 @@ export class AppComponent {
 
   refreshTheme(): void {
     if (this.themeService.alternativeTheme) {
-      if (!this.overlay.classList.contains("alternative")) {
-        this.overlay.classList.add("alternative");
+      if (!this.overlay.classList.contains('alternative')) {
+        this.overlay.classList.add('alternative');
       }
     } else {
-      if (this.overlay.classList.contains("alternative")) {
-        this.overlay.classList.remove("alternative");
+      if (this.overlay.classList.contains('alternative')) {
+        this.overlay.classList.remove('alternative');
       }
     }
   }

@@ -4,7 +4,8 @@
             <mat-icon>menu</mat-icon>
         </button>
 
-        <span class="unselectable" (click)="refresh()"> Smart House </span>
+        <span class="unselectable" (click)="refresh()"> HOM!E </span>
+        <span *ngIf="themeService.alternativeTheme">{{getHomieText()}}</span>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
             <ul fxLayout="row" fxLayoutGap="20px">
@@ -19,7 +20,7 @@
                     </mat-menu>
                 </li>
                 <li>
-                    <button mat-icon-button routerLink="/contacts">
+                    <button mat-icon-button routerLink="/wiki">
                         <mat-icon>help_outline</mat-icon>
                     </button>
                 </li>

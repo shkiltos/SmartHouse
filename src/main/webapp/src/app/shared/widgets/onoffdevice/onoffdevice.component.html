@@ -3,7 +3,7 @@
 
     <span class="topic">
         topic: {{ device.topic }} 
-        <img style="float: right;" class="device-image" [src]="imageName" [alt]="device.name">
+        <img style="float: right;" class="device-image" [src]="imageName" onerror="this.style.display='none'">
     </span>
     
     <div>turned {{device.state ? 'on': 'off'}}</div>
@@ -11,7 +11,4 @@
     <div class="button-group">
         <mat-icon [ngClass]="{'power-butt-on': device.state === onState}" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
     </div>
-</div>
-<div class="widget">
-    
 </div>

@@ -12,14 +12,29 @@
 
     <div class="form">
       <mat-form-field color="primary">
-        <textarea matInput #input rows="1" class="form-control" placeholder="Description" [(ngModel)]="data.description" name="description"></textarea>
+        <input matInput #input class="form-control" placeholder="Topic" [(ngModel)]="data.topic" name="topic" required >
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
 
     <div class="form">
+      <mat-form-field>
+        <mat-select [(value)]="data.image" placeholder="Image">
+          <mat-option  [value]="null">
+            <mat-icon class="icon" style="margin-right: 11px;">block</mat-icon>
+            no image
+          </mat-option>
+          <mat-option *ngFor="let image of images" [value]="image">
+            <img class="icon" [src]="getImageUrl(image)">
+            {{image}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
       <mat-form-field color="primary">
-        <input matInput #input class="form-control" placeholder="Topic" [(ngModel)]="data.topic" name="topic" required >
+        <textarea matInput #input rows="1" class="form-control" placeholder="Description" [(ngModel)]="data.description" name="description"></textarea>
         <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
     </div>
@@ -39,6 +54,9 @@
     <div class="form" *ngIf="data.type==='sensor'">
       <mat-form-field>
         <mat-select [(value)]="data.dimension" placeholder="Dimension">
+          <mat-option [value]="null">
+            no dimension
+          </mat-option>
           <mat-option *ngFor="let dimension of dimensions" [value]="dimension">
             {{dimension}}
           </mat-option>

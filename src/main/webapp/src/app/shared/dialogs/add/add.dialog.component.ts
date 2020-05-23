@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DeviceService } from '../../services/device.service';
 import { IDevice } from '../../model/device';
-import { deviceTypes, dimension } from '../dialog.constants';
+import { deviceTypes, dimension, images } from '../dialog.constants';
 
 @Component({
   selector: 'app-add.dialog',
@@ -15,6 +15,7 @@ export class AddDialogComponent {
 
   deviceTypes = deviceTypes;
   dimensions: string[] = dimension;
+  images: string[] = images;
   onPartSwitchPattern = '1';
   offPartSwitchPattern = '0';
 
@@ -48,6 +49,20 @@ export class AddDialogComponent {
 
   public confirmAdd(): void {
     this.data.switchPattern = this.createPattern();
+
+    // getting rid of extra data for all types
+    switch (this.data.type) {
+      case 'onoffdevice': {
+        this.data.dimension = null;
+        break;
+      }
+      case 'sensor': {
+        this.data.switchPattern = null;
+        this.data.energyConsumption = null;
+        break;
+      }
+    }
+
     this.deviceService.createDevice(this.data);
   }
 
@@ -56,5 +71,9 @@ export class AddDialogComponent {
       return this.onPartSwitchPattern + ':' + this.offPartSwitchPattern;
     }
     return '1:0';
+  }
+
+  getImageUrl(image: string) {
+    return './assets/icons/' + image + '.svg';
   }
 }

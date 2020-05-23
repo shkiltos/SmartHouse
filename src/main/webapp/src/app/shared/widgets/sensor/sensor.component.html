@@ -3,7 +3,7 @@
 
     <span class="topic">
         topic: {{ device.topic }} 
-        <img style="float: right;" class="device-image" [src]="imageName" [alt]="device.name">
+        <img style="float: right;" class="device-image" [src]="imageName" onerror="this.style.display='none'">
     </span>
 
     <br>
@@ -12,7 +12,4 @@
     <div class="button-group">
         <span class="indication">{{device.data === null ? '0.0' : device.data}} {{device.dimension}}</span>
     </div>
-</div>
-<div class="widget">
-    
 </div>

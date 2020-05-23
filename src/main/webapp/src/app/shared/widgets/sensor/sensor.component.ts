@@ -9,16 +9,14 @@ import { IDevice } from '../../model/device';
 })
 export class SensorComponent implements OnInit {
   @Input() device: IDevice;
-  @Input() image: string;
   @Input() theme: boolean;
-
 
   imageName: string;
 
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.imageName =  '../../../../assets/icons/' + this.image;
+    this.imageName =  '../../../../assets/icons/' + this.device.image + '.svg';
   }
 
   update() {

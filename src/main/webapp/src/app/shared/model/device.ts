@@ -10,4 +10,5 @@ export interface IDevice {
     data: string;
     switchPattern: string;
     energyConsumption: string;
+    image: string;
 }

@@ -8,7 +8,6 @@ import { IDevice } from '../../model/device';
   styleUrls: ['./onoffdevice.component.scss']
 })
 export class OnoffdeviceComponent implements OnInit {
-  @Input() image: string;
   @Input() device: IDevice;
   @Input() theme: boolean;
   onState: string;
@@ -19,11 +18,10 @@ export class OnoffdeviceComponent implements OnInit {
   constructor(public deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.imageName =  '../../../../assets/icons/' + this.image;
+    this.imageName =  '../../../../assets/icons/' + this.device.image + '.svg';
     this.onState = this.deviceService.parsePatternOn(this.device);
     this.offState = this.deviceService.parsePatternOff(this.device);
   }
-
 
   toggle() {
     if (this.device.state === this.offState || this.device.state === null) {

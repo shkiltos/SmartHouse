@@ -1,19 +1,19 @@
 <mat-nav-list>
     <div class="profile-card">
         <div class="header">
-            <h2>{{user.name}}</h2>
-            <h4>{{user.email}}</h4>
+            <h2>{{getUser().name}}</h2>
+            <h4>{{getUser().email}}</h4>
         </div>
-        <img [src]="user.picture" alt="Anton Shkilevich">
+        <img [src]="getUser().picture" alt="Anton Shkilevich">
     </div>
 
     <mat-divider></mat-divider>
 
     <h2 matSubheader>Pages</h2>
 
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/devices">Devices</a>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">Dashboard</a>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/reports">Reports</a>
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['devices']">Devices</a>
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['dashboard']">Dashboard</a>
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['reports']">Reports</a>
 
     <mat-divider></mat-divider>
 

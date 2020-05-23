@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
+import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,10 @@ export class HeaderComponent implements OnInit {
   rand: number;
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
 
-  constructor(public themeService: ThemeService) { }
+  constructor(public router: Router,
+              public themeService: ThemeService,
+              private userService: UserService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.rand = this.getRandomInt(5);
@@ -23,10 +28,6 @@ export class HeaderComponent implements OnInit {
         new Event('resize')
       );
     }, 300);
-  }
-
-  refresh() {
-    window.location.href = '/login';
   }
 
   logout() {
@@ -49,5 +50,18 @@ export class HeaderComponent implements OnInit {
 
   getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  getUserEmail() {
+    return this.userService.user.email;
+  }
+
+  // refresh() {
+  //   this.router.navigate(['/', this.getUserEmail()]);
+  // }
+
+  // while client debugging
+  refresh() {
+    window.location.href = '/login';
   }
 }

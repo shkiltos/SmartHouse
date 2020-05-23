@@ -8,17 +8,19 @@ import { IUser } from '../../model/user';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  user: IUser = {
-    name: '',
-    email: '',
-    picture: '../../../../assets/default_user.png'
-  };
 
   constructor(private userService: UserService) {
   }
 
   ngOnInit() {
-    this.userService.fetchUser().subscribe( data => this.user = data );
+    this.userService.fetchUser();
   }
 
+  getUser() {
+    return this.userService.getUser();
+  }
+
+  getUserEmail() {
+    return this.userService.user.email;
+  }
 }

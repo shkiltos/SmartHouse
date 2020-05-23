@@ -1,0 +1,55 @@
+.wrap {
+    height: 100%;
+    width: 100%;
+    background: rgb(65,90,166);
+    background: linear-gradient(180deg, rgb(11, 15, 26) 40%, rgba(255,255,255,1) 100%);
+    display: flex;
+}
+
+.main-image {
+    position: absolute;
+    bottom: -3%;
+    width: 50%;
+}
+
+.main-button {
+    width: 5rem;
+    background-color: rgb(65,90,166);
+    border: 0;
+    border-radius: 15px;
+    width: 10rem;
+    height: 3rem;
+    transition: 1s;
+    color: white;
+    font-size: 1rem;
+}
+
+.main-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.panel {
+    position: absolute;
+    left: 70%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    color: white;
+    // font-weight: bold;
+    // background-color: rgba(8, 8, 8, 0.349);
+    border-radius: 1rem;
+    text-align: right;
+    line-height: 30px;
+}
+
+.info {
+    color: rgb(131, 141, 157);
+    font-size: 20px;
+}
+
+h2 {
+    right: 0;
+    font-size: 44px;
+}
+
+button:focus { outline: none; }

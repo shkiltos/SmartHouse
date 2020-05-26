@@ -1,0 +1,32 @@
+<div class="container">
+    <h3 mat-dialog-title>Change user settings</h3>
+  
+    <form (ngSubmit)="submit" #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field color="primary">
+          <input matInput #input class="form-control" placeholder="Name" [(ngModel)]="settings.userName" name="name" required>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="primary">
+          <input matInput #input class="form-control" placeholder="Picture url" [(ngModel)]="settings.picture" name="picture">
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="primary">
+          <input matInput #input type="number" class="form-control" placeholder="Energy consumption (kw/h)" [(ngModel)]="settings.maxEnergyConsumption" name="energyConsumption">
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div mat-dialog-actions class="actions">
+        <button mat-button [type]="submit" [disabled]="!formControl.valid" (click)="updateSettings(settings)">Save</button>
+        <!-- <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button> -->
+      </div>
+    </form>
+</div>

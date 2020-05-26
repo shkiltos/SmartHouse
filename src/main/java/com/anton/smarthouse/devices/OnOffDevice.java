@@ -18,17 +18,24 @@ public class OnOffDevice implements Device {
     public String id;
     private String topic;
     private String state;
+    private String onState;
+    private String offState;
+    private double energyConsumption;
     private IMqttClient client;
 
     public static final String DEFAULT_SWITCH_PATTERN = "1:0";
 
     private final DeviceService deviceService;
 
-    public OnOffDevice(String id, String state, String topic, DeviceService deviceService) {
+    public OnOffDevice(String id, String state, String topic, String switchPattern, String energyConsumption, DeviceService deviceService) {
         this.deviceService = deviceService;
         this.id = id;
-        this.state = state;
         this.topic = topic;
+        this.energyConsumption = Float.parseFloat(energyConsumption);
+        String[] parts = switchPattern.split(":");
+        this.onState = parts[0];
+        this.offState = parts[1];
+        this.state = state != null ? state : offState;
         try {
             String clientId = UUID.randomUUID().toString();
             this.client = new MqttClient(brokerURL, clientId, new MqttDefaultFilePersistence(dataStore));
@@ -56,6 +63,10 @@ public class OnOffDevice implements Device {
 
     public String getId() {
         return this.id;
+    }
+
+    public double getEnergyConsumption() {
+        return this.energyConsumption;
     }
 
     public void subscribe() throws MqttException, InterruptedException {
@@ -87,5 +98,9 @@ public class OnOffDevice implements Device {
         this.state = msg;
         this.deviceService.updateState(this.id, this.state);
         log.info("Updated state for " + this.id + " : " + this.topic + " to " + this.state);
+    }
+
+    public boolean isDeviceOn() {
+        return this.state.equals(this.onState);
     }
 }

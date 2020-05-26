@@ -77,7 +77,7 @@ public class DeviceController {
     public ResponseEntity<String> publishMessage(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
-        return deviceService.publishMessage(user, deviceId, message) ? ResponseEntity.ok().body(message) : ResponseEntity.badRequest().build();
+        return ResponseEntity.ok().body(deviceService.publishMessage(user, deviceId, message));
     }
 
     @GetMapping(value = "/refreshUserDevices")

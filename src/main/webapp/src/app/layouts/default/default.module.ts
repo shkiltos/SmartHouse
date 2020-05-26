@@ -19,6 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MainComponent } from 'src/app/modules/main/main.component';
+import { SettingsComponent } from 'src/app/modules/settings/settings.component';
+import { CameraComponent } from 'src/app/modules/camera/camera.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { MainComponent } from 'src/app/modules/main/main.component';
     DevicesComponent,
     DashboardComponent,
     ReportsComponent,
-    MainComponent
+    MainComponent,
+    SettingsComponent,
+    CameraComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,8 @@ import { MainComponent } from 'src/app/modules/main/main.component';
     MatSortModule,
     MatIconModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
   providers: [
     DashboardService

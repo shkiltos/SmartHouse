@@ -6,6 +6,8 @@ import { ReportsComponent } from './modules/reports/reports.component';
 import { DevicesComponent } from './modules/devices/devices.component';
 import { MainComponent } from './modules/main/main.component';
 import { WelcomeComponent } from './layouts/welcome/welcome.component';
+import { SettingsComponent } from './modules/settings/settings.component';
+import { CameraComponent } from './modules/camera/camera.component';
 
 
 const routes: Routes = [{
@@ -31,6 +33,14 @@ const routes: Routes = [{
   {
     path: 'reports',
     component: ReportsComponent
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent
+  },
+  {
+    path: 'cam',
+    component: CameraComponent
   }]
 }];
 

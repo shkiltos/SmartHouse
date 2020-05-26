@@ -1,9 +1,9 @@
 <div class="text">
-    <h4>{{ device.name }}</h4>
+    <h4 [matTooltip]="device.description">{{ device.name }}</h4>
 
     <span class="topic">
         topic: {{ device.topic }} 
-        <img *ngIf="device.image !== null" style="float: right;" class="device-image" [src]="imageName" onerror="this.style.display='none'">
+        <img *ngIf="device.image !== null" style="float: right;" class="device-image" [src]="imageName" [matTooltip]="device.description" onerror="this.style.display='none'">
     </span>
 
     <br>

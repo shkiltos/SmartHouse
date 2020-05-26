@@ -15,7 +15,7 @@ public class UserEntity {
     private String name;
     private String email;
     private String picture;
-    private List<String> deviceIds;
+    private Double maxEnergyConsumption;
     private LocalDateTime lastVisit;
 
     public UserEntity(String name, String email, String picture) {

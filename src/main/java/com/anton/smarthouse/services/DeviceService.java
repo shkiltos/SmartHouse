@@ -9,6 +9,7 @@ import com.anton.smarthouse.repository.DeviceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import static com.anton.smarthouse.devices.OnOffDevice.DEFAULT_SWITCH_PATTERN;
 
@@ -61,22 +63,24 @@ public class DeviceService {
         deviceRepository.deleteById(deviceId);
     }
 
-    public boolean publishMessage(UserEntity user, String deviceId, String msg) {
-        Optional<Device> device = userDevices.get(user.getEmail()).stream().filter(d -> d.getId().equals(deviceId)).findFirst();
-        if(device.isPresent()) {
-            if (device.get() instanceof OnOffDevice) {
-                OnOffDevice onOffDevice = (OnOffDevice) device.get();
-                try {
-                    onOffDevice.publish(msg);
-                    return true;
-                } catch (MqttException e) {
-                    log.error("publish error");
+    public String publishMessage(UserEntity user, String deviceId, String msg) {
+        List<OnOffDevice> activeDevices = userDevices.get(user.getEmail()).stream().filter(d -> d instanceof OnOffDevice).map(d -> (OnOffDevice) d).collect(Collectors.toList());
+        Optional<OnOffDevice> device = activeDevices.stream().filter(d -> d.getId().equals(deviceId)).findFirst();
+        if (device.isPresent()) {
+            OnOffDevice onOffDevice = device.get();
+            try {
+                if (user.getMaxEnergyConsumption() != null && user.getMaxEnergyConsumption() != 0 && onOffDevice.getEnergyConsumption() > 0) {
+                    if (exceedsEnergyLimit(user, onOffDevice, activeDevices)) {
+                        return "exceed";
+                    }
                 }
-            } else {
-                log.error("cast error");
+                onOffDevice.publish(msg);
+                return msg;
+            } catch (MqttException e) {
+                log.error("publish error");
             }
         }
-        return false;
+        return "bad";
     }
 
     public boolean updateData(String deviceId, String data) {
@@ -107,7 +111,7 @@ public class DeviceService {
             try {
                 switch (device.getType()) {
                     case "onoffdevice": {
-                        OnOffDevice onOffDevice = new OnOffDevice(device.getId(), device.getState(), device.getTopic(), this);
+                        OnOffDevice onOffDevice = new OnOffDevice(device.getId(), device.getState(), device.getTopic(), device.getSwitchPattern(), device.getEnergyConsumption(), this);
                         onOffDevice.subscribe();
                         deviceList.add(onOffDevice);
                         log.info("Connected onoffdevice: \"" + device.getName() + "\" for " + user.getEmail());
@@ -132,4 +136,20 @@ public class DeviceService {
 
         userDevices.put(user.getEmail(), deviceList);
     }
+
+    private boolean exceedsEnergyLimit(UserEntity user, OnOffDevice device, List<OnOffDevice> activeDevices) {
+        double currentEnergyConsumptionSum = 0;
+        for (OnOffDevice ad : activeDevices) {
+            if (!ad.getId().equals(device.getId()) && ad.isDeviceOn()) {
+                currentEnergyConsumptionSum += ad.getEnergyConsumption();
+            }
+        }
+
+        return currentEnergyConsumptionSum + device.getEnergyConsumption() > user.getMaxEnergyConsumption() ? true : false;
+    }
+
+//    @Scheduled(fixedRate = 5000)
+//    public void job() {
+//        System.out.println("dabudi");
+//    }
 }

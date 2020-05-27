@@ -19,7 +19,7 @@
 
       <div class="form">
         <mat-form-field color="primary">
-          <input matInput #input type="number" class="form-control" placeholder="Energy consumption (kw/h)" [(ngModel)]="settings.maxEnergyConsumption" name="energyConsumption">
+          <input matInput #input type="number" class="form-control" placeholder="Energy consumption limit (kw/h)" [(ngModel)]="settings.maxEnergyConsumption" name="energyConsumption">
           <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
       </div>

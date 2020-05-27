@@ -23,14 +23,14 @@ export class AreaComponent implements OnInit {
         type: 'area'
       },
       title: {
-        text: 'Random DATA'
+        text: 'Energy consumption (kW)'
       },
       subtitle: {
-        text: 'Demo'
+        text: 'daily'
       },
       tooltip: {
         split: true,
-        valueSuffix: ' millions'
+        valueSuffix: ' kW'
       },
       credits: {
         enabled: false

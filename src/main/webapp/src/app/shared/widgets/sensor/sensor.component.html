@@ -1,5 +1,5 @@
 <div class="text">
-    <h4 [matTooltip]="device.description">{{ device.name }}</h4>
+    <h4 matTooltipPosition="above" [matTooltip]="device.description">{{ device.name }}</h4>
 
     <span class="topic">
         topic: {{ device.topic }} 
@@ -10,6 +10,6 @@
     <br>
 
     <div class="button-group">
-        <span class="indication">{{device.data === null ? '0.0' : device.data}} {{device.dimension}}</span>
+        <span class="indication">{{device.data === null ? '--' : device.data}} {{device.dimension}}</span>
     </div>
 </div>

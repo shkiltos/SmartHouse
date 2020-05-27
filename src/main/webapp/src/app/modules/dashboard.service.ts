@@ -9,25 +9,22 @@ export class DashboardService {
 
   bigChart() {
     return [{
-      name: 'Asia',
-      data: [502, 635, 809, 947, 1402, 3634, 5268]
+      name: 'February',
+      data: [230, 230, 275, 121, 100, 116, 200, 100, 70]
     }, {
-      name: 'Africa',
-      data: [106, 107, 111, 133, 221, 767, 1766]
+      name: 'March',
+      data: [250, 200, 210, 195, 193, 240, 254, 230, 205]
     }, {
-      name: 'Europe',
-      data: [163, 203, 276, 408, 547, 729, 628]
+      name: 'April',
+      data: [104, 110, 125, 126, 124, 129, 132, 133, 130]
     }, {
-      name: 'America',
-      data: [18, 31, 54, 156, 339, 818, 1201]
-    }, {
-      name: 'Oceania',
-      data: [2, 2, 2, 6, 13, 30, 46]
+      name: 'May',
+      data: [106, 200, 215, 215, 234, 205, 210, 220, 205]
     }];
   }
 
   cards() {
-    return [71, 78, 39, 66];
+    return [21.1, 19.3, 18.9, 22.1];
   }
 
   pieChart() {

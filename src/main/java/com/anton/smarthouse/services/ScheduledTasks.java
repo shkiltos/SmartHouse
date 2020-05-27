@@ -30,19 +30,18 @@ public class ScheduledTasks {
         System.out.println("The time is now " + dateFormat.format(new Date()));
     }
 
-    @Scheduled(fixedRate = 20000)
-    public void askAllSensors() {
-        deviceService.userDevices.forEach((email, dList) -> {
-            dList.forEach(d -> {
-                if (d instanceof SensorDevice) {
-                    try {
-                        ((SensorDevice) d).publish("1");
-                    } catch (Exception e) {
-                        log.error("mqtt exception occurred");
-                    }
-
-                }
-            });
-        });
-    }
+//    @Scheduled(fixedRate = 20000)
+//    public void askAllSensors() {
+//        deviceService.userDevices.forEach((email, dList) -> {
+//            dList.forEach(d -> {
+//                if (d instanceof SensorDevice) {
+//                    try {
+//                        ((SensorDevice) d).publish("-");
+//                    } catch (Exception e) {
+//                        log.error("mqtt exception occurred");
+//                    }
+//                }
+//            });
+//        });
+//    }
 }

@@ -4,7 +4,11 @@ import com.anton.smarthouse.model.DeviceEntity;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.services.DeviceService;
 import com.anton.smarthouse.services.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,14 +43,24 @@ public class DeviceController {
         return true;
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @ApiOperation(value = "Method of getting all user devices from DB")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Device found: ", response = DeviceEntity.class),
+            @ApiResponse(code = 404, message = "Exception occurred : ", response = String.class)})
     public ResponseEntity<List<DeviceEntity>> findAll() {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(deviceService.findAll(user.getId()));
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{deviceId}")
+    @ApiOperation(value = "Method of getting all user devices from DB")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Device found: ", response = DeviceEntity.class),
+            @ApiResponse(code = 404, message = "Device not found : ", response = String.class)})
     public ResponseEntity<DeviceEntity> findById(@PathVariable String deviceId) {
         Optional<DeviceEntity> device = deviceService.findById(deviceId);
 
@@ -54,11 +68,16 @@ public class DeviceController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @ApiOperation(value = "Method of adding a new device to DB")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Device created: ", response = DeviceEntity.class),
+            @ApiResponse(code = 400, message = "Exception occurred : ", response = String.class)})
     public ResponseEntity<DeviceEntity> create(@RequestBody DeviceEntity device) {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(deviceService.create(device, user.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(deviceService.create(device, user.getId()));
     }
 
     @PutMapping("/{deviceId}")

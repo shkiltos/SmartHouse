@@ -8,8 +8,7 @@ import { outOfEnergyLimit } from '../../dialogs/dialog.constants';
 @Component({
   selector: 'app-widget-onoffdevice',
   templateUrl: './onoffdevice.component.html',
-  styleUrls: ['./onoffdevice.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./onoffdevice.component.scss']
 })
 export class OnoffdeviceComponent implements OnInit {
   @Input() device: IDevice;

@@ -23,8 +23,4 @@ public class UserEntity {
         this.name = name;
         this.picture = picture;
     }
-
-    public void setLastVisit(LocalDateTime dateTime) {
-        this.lastVisit = dateTime;
-    }
 }

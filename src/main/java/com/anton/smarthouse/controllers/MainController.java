@@ -24,7 +24,7 @@ class MainController {
     }
 
     @PostMapping(value = "/user/settings")
-    public UserSettings getUser(@RequestBody UserSettings settings) {
+    public UserSettings setUserSettings(@RequestBody UserSettings settings) {
         return userService.updateSettings(settings);
     }
 

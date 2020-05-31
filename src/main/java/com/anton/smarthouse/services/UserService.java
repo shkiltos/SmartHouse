@@ -26,6 +26,7 @@ public class UserService {
         user.setMaxEnergyConsumption(settings.getMaxEnergyConsumption());
         user.setName(settings.getUserName());
         user.setPicture(settings.getPicture());
+        user.setCams(settings.getCams());
         userRepository.save(user);
         return settings;
     }

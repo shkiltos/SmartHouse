@@ -3,7 +3,7 @@
 
     <span class="topic">
         topic: {{ device.topic }} 
-        <img *ngIf="device.image !== null" style="float: right;" class="device-image" [src]="imageName" [matTooltip]="device.description" onerror="this.style.display='none'">
+        <img *ngIf="device.image !== null" class="device-image" [src]="imageName" [matTooltip]="device.description" onerror="this.style.display='none'">
     </span>
 
     <br>

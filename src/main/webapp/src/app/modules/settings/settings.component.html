@@ -1,8 +1,14 @@
+<div >
 <div class="container">
-    <h3 mat-dialog-title>Change user settings</h3>
   
     <form (ngSubmit)="submit" #formControl="ngForm">
-  
+      <span mat-dialog-title style="font-weight: 800; vertical-align: sub;">
+        <span>Change user settings</span>
+        <button mat-raised-button color="accent" style="float:right" [type]="submit" [disabled]="!formControl.valid" (click)="updateSettings(settings)">Save</button>
+      </span>
+      
+    <br>
+    <br>
       <div class="form">
         <mat-form-field color="primary">
           <input matInput #input class="form-control" placeholder="Name" [(ngModel)]="settings.userName" name="name" required>
@@ -24,9 +30,19 @@
         </mat-form-field>
       </div>
 
-      <div mat-dialog-actions class="actions">
-        <button mat-button [type]="submit" [disabled]="!formControl.valid" (click)="updateSettings(settings)">Save</button>
-        <!-- <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button> -->
+      <button mat-raised-button (click)="addCamera()">Add camera</button>
+      <br>
+      <br>
+
+      <div class="form" *ngFor="let camera of settings.cams; let index = index;">
+        <mat-form-field color="primary">
+          <textarea matInput #input rows="1" class="form-control" placeholder="Camera №{{index + 1}}" [(ngModel)]="camera.value" name={{index}}></textarea>
+        </mat-form-field>
+        <button mat-icon-button color="accent" style="font-size: 1rem;" (click)="removeCamera(index)">
+          <mat-icon>close</mat-icon>
+      </button>
       </div>
+      
     </form>
+</div>
 </div>

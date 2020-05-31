@@ -31,7 +31,7 @@ public class OnOffDevice implements Device {
         this.deviceService = deviceService;
         this.id = id;
         this.topic = topic;
-        this.energyConsumption = Float.parseFloat(energyConsumption);
+        this.energyConsumption = energyConsumption == null ? 0 : Float.parseFloat(energyConsumption);
         String[] parts = switchPattern.split(":");
         this.onState = parts[0];
         this.offState = parts[1];

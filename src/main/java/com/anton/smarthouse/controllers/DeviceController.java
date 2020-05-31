@@ -36,7 +36,7 @@ public class DeviceController {
     }
 
     @GetMapping(value = "/init")
-    public boolean init() {
+    public boolean initConnection() {
         UserEntity user = userService.getUser();
         if (user == null) return false;
         deviceService.initDevices(user, deviceService.findAll(user.getId()));
@@ -77,14 +77,18 @@ public class DeviceController {
     public ResponseEntity<DeviceEntity> create(@RequestBody DeviceEntity device) {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(deviceService.create(device, user.getId()));
+        DeviceEntity de = deviceService.create(device, user.getId());
+        if (de != null) deviceService.refreshDeviceConnection(user, device);
+        return ResponseEntity.status(HttpStatus.CREATED).body(de);
     }
 
     @PutMapping("/{deviceId}")
     public ResponseEntity<DeviceEntity> update(@PathVariable String deviceId, @RequestBody DeviceEntity device) {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(deviceService.update(deviceId, device, user.getId()));
+        DeviceEntity de = deviceService.update(deviceId, device, user.getId());
+        if (de != null) deviceService.refreshDeviceConnection(user, device);
+        return ResponseEntity.ok().body(de);
     }
 
     @DeleteMapping("/{deviceId}")

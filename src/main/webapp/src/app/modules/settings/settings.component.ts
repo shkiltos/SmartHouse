@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/services/user.service';
 import { FormControl, Validators } from '@angular/forms';
+import { ICamera } from 'src/app/shared/model/camera';
+
+interface ISettings {
+  userName: string;
+  maxEnergyConsumption: number;
+  picture: string;
+  cams: ICamera[];
+}
 
 @Component({
   selector: 'app-settings',
@@ -8,10 +16,11 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  public settings = {
+  public settings: ISettings = {
     userName: this.userService.user.name,
     maxEnergyConsumption: this.userService.user.maxEnergyConsumption,
-    picture: this.userService.user.picture
+    picture: this.userService.user.picture,
+    cams: this.userService.user.cams
   };
 
   formControl = new FormControl('', [
@@ -19,13 +28,15 @@ export class SettingsComponent implements OnInit {
     // Validators.email,
   ]);
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.fetchUserObservable().subscribe(user => {
       this.settings.userName = user.name;
       this.settings.maxEnergyConsumption = user.maxEnergyConsumption;
       this.settings.picture = user.picture;
+      this.settings.cams = user.cams;
+      if (this.settings.cams === undefined || this.settings.cams === null) this.settings.cams = [];
     });
   }
 
@@ -41,5 +52,15 @@ export class SettingsComponent implements OnInit {
 
   public updateSettings(settings: any) {
     this.userService.updateSettings(settings);
+    this.userService.fetchUser();
+  }
+
+  addCamera() {
+    const camera = {name: 'Camera name', value: 'iframe url'};
+    this.settings.cams.push(camera);
+  }
+
+  removeCamera(index: number) {
+    this.settings.cams.splice(index, 1);
   }
 }

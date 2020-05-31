@@ -15,6 +15,7 @@ public class UserEntity {
     private String name;
     private String email;
     private String picture;
+    private List<Camera> cams;
     private Double maxEnergyConsumption;
     private LocalDateTime lastVisit;
 

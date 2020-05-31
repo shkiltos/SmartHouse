@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
-import static com.anton.smarthouse.services.DeviceService.brokerURL;
-import static com.anton.smarthouse.services.DeviceService.dataStore;
+import static com.anton.smarthouse.services.DeviceService.*;
 
 @Slf4j
 public class SensorDevice implements Device {
@@ -56,7 +55,8 @@ public class SensorDevice implements Device {
     public void subscribe() throws MqttException{
         client.subscribe(this.topic, (topic, msg) -> {
             String payload = new String(msg.getPayload());
-            log.info(String.format("Message received: topic=" + topic + ", payload=" + payload));
+            if (payload.equals(ASK_SENSORS_MSG)) return;
+            log.info("Message received: topic=" + topic + ", payload=" + payload);
             updateData(payload);
         });
     }
@@ -78,7 +78,7 @@ public class SensorDevice implements Device {
         client.publish(topic, msg);
 //
 //        return msg.toString();
-        return "message";
+        return message;
     }
 
 }

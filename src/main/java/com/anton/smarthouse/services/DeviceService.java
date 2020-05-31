@@ -29,6 +29,8 @@ public class DeviceService {
 
     public static final String dataStore = "mqttconnections";
 
+    public static final String ASK_SENSORS_MSG = "-";
+
     public static final ConcurrentMap<String, List<Device>> userDevices = new ConcurrentHashMap<>();
 
     private final DeviceRepository deviceRepository;
@@ -108,32 +110,14 @@ public class DeviceService {
     public void initDevices(UserEntity user, List<DeviceEntity> devices) {
         List<Device> deviceList = new ArrayList<>();
         for (DeviceEntity device : devices) {
+            Device d = null;
             try {
-                switch (device.getType()) {
-                    case "onoffdevice": {
-                        OnOffDevice onOffDevice = new OnOffDevice(device.getId(), device.getState(), device.getTopic(), device.getSwitchPattern(), device.getEnergyConsumption(), this);
-                        onOffDevice.subscribe();
-                        deviceList.add(onOffDevice);
-                        log.info("Connected onoffdevice: \"" + device.getName() + "\" for " + user.getEmail());
-                        break;
-                    }
-                    case "sensor": {
-                        SensorDevice sensorDevice = new SensorDevice(device.getId(), device.getTopic(), this);
-                        sensorDevice.subscribe();
-                        deviceList.add(sensorDevice);
-                        log.info("Connected sensor: \"" + device.getName() + "\" for " + user.getEmail());
-                        break;
-                    }
-                }
-//                OnOffDevice onOffDevice = new OnOffDevice(false, "wemos/led");
-//                onOffDevice.subscribe();
-//                onOffDevice.publish();
-//                deviceList.add(onOffDevice);
+                d = establishDeviceConnection(user, device);
             } catch (MqttException | InterruptedException e) {
-                log.error("init failed for device " + device.getName());
+                log.error("Connection failed for device " + device.getName());
             }
+            if (d != null) deviceList.add(d);
         }
-
         userDevices.put(user.getEmail(), deviceList);
     }
 
@@ -148,8 +132,33 @@ public class DeviceService {
         return currentEnergyConsumptionSum + device.getEnergyConsumption() > user.getMaxEnergyConsumption() ? true : false;
     }
 
-//    @Scheduled(fixedRate = 5000)
-//    public void job() {
-//        System.out.println("dabudi");
-//    }
+    public Device establishDeviceConnection(UserEntity user, DeviceEntity deviceEntity) throws MqttException, InterruptedException {
+        switch (deviceEntity.getType()) {
+            case "onoffdevice": {
+                OnOffDevice onOffDevice = new OnOffDevice(deviceEntity.getId(), deviceEntity.getState(), deviceEntity.getTopic(), deviceEntity.getSwitchPattern(), deviceEntity.getEnergyConsumption(), this);
+                onOffDevice.subscribe();
+                log.info("Connected onoffdevice: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
+                return onOffDevice;
+            }
+            case "sensor": {
+                SensorDevice sensorDevice = new SensorDevice(deviceEntity.getId(), deviceEntity.getTopic(), this);
+                sensorDevice.subscribe();
+                log.info("Connected sensor: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
+                return sensorDevice;
+            }
+        }
+        return null;
+    }
+
+    public void refreshDeviceConnection(UserEntity user, DeviceEntity deviceEntity) {
+        List<Device> deviceList = userDevices.get(user.getEmail());
+        if (deviceList != null) {
+            deviceList.removeIf(d -> d.getId().equals(deviceEntity.getId()));
+            try {
+                deviceList.add(establishDeviceConnection(user, deviceEntity));
+            } catch (MqttException | InterruptedException e) {
+                log.error("Connection failed for device " + deviceEntity.getName());
+            }
+        }
+    }
 }

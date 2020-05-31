@@ -1,5 +1,10 @@
 .cam {
-    height: 300px;
-    width: 100%;
-    padding-bottom: 10px;
+    height: 300px !important;
+    // width: 100% !important;
+    max-width: 900px !important;
+    width: 540px;
+    padding-bottom: 10px !important;
+    padding-right: 10px !important;
+    border:0px; 
+    overflow:hidden;
 }

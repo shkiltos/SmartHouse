@@ -15,7 +15,8 @@ export class UserService {
     name: '',
     email: '',
     picture: '../../../../assets/default_user.png',
-    maxEnergyConsumption: 0
+    maxEnergyConsumption: 0,
+    cams: []
   };
   isLoggedIn = false;
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {

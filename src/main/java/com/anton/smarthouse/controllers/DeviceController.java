@@ -47,12 +47,24 @@ public class DeviceController {
     @GetMapping
     @ApiOperation(value = "Method of getting all user devices from DB")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Device found: ", response = DeviceEntity.class),
+            @ApiResponse(code = 200, message = "Devices found: ", response = DeviceEntity.class),
             @ApiResponse(code = 404, message = "Exception occurred : ", response = String.class)})
     public ResponseEntity<List<DeviceEntity>> findAll() {
         UserEntity user = userService.getUser();
         if (user == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body(deviceService.findAll(user.getId()));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/sensors")
+    @ApiOperation(value = "Method of getting all user sensors from DB")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sensors found: ", response = DeviceEntity.class),
+            @ApiResponse(code = 404, message = "Exception occurred : ", response = String.class)})
+    public ResponseEntity<List<DeviceEntity>> findAllSensors() {
+        UserEntity user = userService.getUser();
+        if (user == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(deviceService.findAllSensors(user.getId()));
     }
 
     @ResponseStatus(HttpStatus.OK)

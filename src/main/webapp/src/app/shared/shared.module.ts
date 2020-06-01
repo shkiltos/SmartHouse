@@ -34,6 +34,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { AlertComponent } from './dialogs/alert/alert.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ReportService } from './services/report.service';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   providers: [
     DeviceService,
-    UserService
+    UserService,
+    ReportService
   ]
 })
 export class SharedModule { }

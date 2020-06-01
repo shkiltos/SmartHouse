@@ -1,9 +1,14 @@
 .stats-cards {
     .mat-card {
       overflow: hidden;
+      height: 200px;
     }
 }
   
-table {
-    width: 100%;
+.sensor-card {
+  display: inline-block;
+  width: 24% !important;
+  vertical-align: top;
+  height: 200px;
+  padding:5px;
 }

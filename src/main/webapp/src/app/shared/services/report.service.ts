@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { IDevice } from '../model/device';
+
+const baseUrl = '/api/devices';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class ReportService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  fetchSensorData() {
+    return this.http.get<IDevice[]>(baseUrl + '/sensors');
+  }
 
   bigChart() {
     return [{

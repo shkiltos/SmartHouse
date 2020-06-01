@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DashboardService } from '../dashboard.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { ReportService } from 'src/app/shared/services/report.service';
+import { IDevice } from 'src/app/shared/model/device';
 
 
 @Component({
@@ -10,24 +9,28 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  sensors: IDevice[];
 
   bigChart = [];
-  cards1 = [21.1, 19.3, 18.9, 22.1];
-  cards2 = [25.1, 30.2, 25.0, 32.5];
-  cards3 = [21.1, 19.3, 18.9, 22.1];
-  cards4 = [25.1, 30.2, 25.0, 32.5];
 
   pieChart = [];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private reportService: ReportService) { }
 
   ngOnInit() {
-    this.bigChart = this.dashboardService.bigChart();
-    // this.cards1 = this.dashboardService.cards();
-    this.pieChart = this.dashboardService.pieChart();
+    this.bigChart = this.reportService.bigChart();
+    this.pieChart = this.reportService.pieChart();
+
+    this.reportService.fetchSensorData().subscribe( data => {
+      this.sensors = data;
+    });
+  }
+
+  getPercentage(recentData: number[]): number {
+    return recentData ? 100 * (recentData[recentData.length - 1] - recentData[0]) / recentData[0] : null;
+  }
+
+  toInt(stringArray: string[]) {
+    return stringArray ? stringArray.map( str => parseFloat(str)) : null;
   }
 }

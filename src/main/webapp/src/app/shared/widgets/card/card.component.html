@@ -1,17 +1,16 @@
+
 <div class="text">
     <h4>{{ label }}</h4>
 
-    <span class="total">{{ total }}</span>
+    <span class="total">{{ total }}{{dimension}}</span>
 
     <span>
-        <mat-icon color="primary">trending_up</mat-icon>
+        <mat-icon [ngStyle]="{'color': percentage >= 0 ? 'green' : 'red'}">{{ percentage >= 0 ? 'trending_up' : 'trending_down'}}</mat-icon>
     </span>
 
-    <span class="description">
-        {{ percentage }}%
+    <span class="description" [ngStyle]="{'color': percentage >= 0 ? 'green' : 'red'}">
+        {{ percentage ? percentage.toFixed(2) + '%' : ''}}
     </span>
-
-    <!-- <span> of target</span> -->
 </div>
 <div class="widget">
     <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"

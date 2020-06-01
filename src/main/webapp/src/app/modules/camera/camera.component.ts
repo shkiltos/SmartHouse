@@ -17,9 +17,9 @@ export class CameraComponent implements OnInit {
       this.userService.user.cams.forEach(cam => {
         html += '<iframe class="cam" src="' + cam.value + '" width="535px" height="290px" style="border:0px; overflow:hidden; padding-bottom: 10px; padding-right: 15px" scrolling="no"></iframe>';
       });
-      this.htmlSnippet = this.sanitizer.bypassSecurityTrustHtml(html)
+      this.htmlSnippet = this.sanitizer.bypassSecurityTrustHtml(html);
     });
-    
+
   }
 
 }

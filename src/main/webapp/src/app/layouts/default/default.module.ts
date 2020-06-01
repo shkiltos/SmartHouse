@@ -5,7 +5,6 @@ import { DashboardComponent } from 'src/app/modules/dashboard/dashboard.componen
 import { RouterModule } from '@angular/router';
 import { ReportsComponent } from 'src/app/modules/reports/reports.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { DashboardService } from 'src/app/modules/dashboard.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule} from '@angular/material/card';
@@ -22,6 +21,7 @@ import { MainComponent } from 'src/app/modules/main/main.component';
 import { SettingsComponent } from 'src/app/modules/settings/settings.component';
 import { CameraComponent } from 'src/app/modules/camera/camera.component';
 import { FormsModule } from '@angular/forms';
+import { WikiComponent } from 'src/app/modules/wiki/wiki.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     ReportsComponent,
     MainComponent,
     SettingsComponent,
-    CameraComponent
+    CameraComponent,
+    WikiComponent
   ],
   imports: [
     CommonModule,
@@ -50,8 +51,6 @@ import { FormsModule } from '@angular/forms';
     MatSelectModule,
     FormsModule
   ],
-  providers: [
-    DashboardService
-  ]
+  providers: []
 })
 export class DefaultModule { }

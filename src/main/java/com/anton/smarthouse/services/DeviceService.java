@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
@@ -54,6 +52,10 @@ public class DeviceService {
         return deviceRepository.findDeviceEntitiesByUserId(userId);
     }
 
+    public List<DeviceEntity> findAllSensors(String userId) {
+        return deviceRepository.findDeviceEntitiesByUserIdAndType(userId, "sensor");
+    }
+
     public DeviceEntity update(String id, DeviceEntity device, String userId) {
         device.setId(id);
         device.setUserId(userId);
@@ -85,11 +87,39 @@ public class DeviceService {
         return "bad";
     }
 
-    public boolean updateData(String deviceId, String data) {
+    public boolean updateData(String deviceId, String data, String previousData) {
         Optional<DeviceEntity> deviceOptional = findById(deviceId);
         if (!deviceOptional.isPresent()) return false;
         DeviceEntity device = deviceOptional.get();
         device.setData(data);
+
+        // 4 recent except current
+//        List<String> deviceList = device.getRecentData();
+//        if (deviceList == null) {
+//            if (previousData != null) {
+//                deviceList = new ArrayList<>();
+//                deviceList.add(previousData);
+//                device.setRecentData(deviceList.stream().collect(Collectors.toList()));
+//            }
+//        } else {
+//            if (previousData != null) {
+//                deviceList.add(previousData);
+//                if (deviceList.size() > 4) deviceList.remove(0);
+//                device.setRecentData(deviceList.stream().collect(Collectors.toList()));
+//            }
+//        }
+
+        List<String> deviceList = device.getRecentData();
+        if (deviceList == null) {
+            deviceList = new ArrayList<>();
+            deviceList.add(data);
+            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
+        } else {
+            deviceList.add(data);
+            if (deviceList.size() > 4) deviceList.remove(0);
+            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
+        }
+
         deviceRepository.save(device);
         return true;
     }

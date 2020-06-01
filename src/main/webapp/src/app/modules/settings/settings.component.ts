@@ -36,7 +36,9 @@ export class SettingsComponent implements OnInit {
       this.settings.maxEnergyConsumption = user.maxEnergyConsumption;
       this.settings.picture = user.picture;
       this.settings.cams = user.cams;
-      if (this.settings.cams === undefined || this.settings.cams === null) this.settings.cams = [];
+      if (this.settings.cams === undefined || this.settings.cams === null){
+        this.settings.cams = [];
+      }
     });
   }
 

@@ -62,8 +62,9 @@ public class SensorDevice implements Device {
     }
 
     private void updateData(String payload) {
+        String previousData = this.data;
         this.data = payload;
-        this.deviceService.updateData(this.id, payload);
+        this.deviceService.updateData(this.id, payload, previousData);
         log.info("Updated data for " + this.id + " : " + this.topic + " to " + this.data);
     }
 

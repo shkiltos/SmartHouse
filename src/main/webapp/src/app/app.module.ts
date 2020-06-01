@@ -8,6 +8,7 @@ import { DefaultModule } from './layouts/default/default.module';
 import { ThemeService } from './shared/services/theme.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { WelcomeComponent } from './layouts/welcome/welcome.component';
+import { WikiComponent } from './modules/wiki/wiki.component';
 
 @NgModule({
   declarations: [

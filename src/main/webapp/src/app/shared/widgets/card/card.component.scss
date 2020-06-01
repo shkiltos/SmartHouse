@@ -7,14 +7,15 @@ h4 {
   font-size: 2em;
 }
 
-.mat-icon,
-.description {
-  color: green;
+.mat-icon {
   font-size: 2em;
+}
+.description {
+  font-size: 1em;
 }
 
 .mat-icon {
   position: relative;
-  padding: 0 20px;
+  padding: 0 10px 0 30px;
   top: 5px;
 }

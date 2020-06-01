@@ -8,18 +8,9 @@
 
 <br>
 
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-    <mat-card fxFlex="25">
-        <app-widget-card label="Temperature in the kitchen" total="22˚C" percentage="16" [data]="cards1"></app-widget-card>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="Humidity in the kitchen" total="32.5%" percentage="40" [data]="cards2"></app-widget-card>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="Temperature in the hall" total="21˚C" percentage="17.5" [data]="cards3"></app-widget-card>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="Humidity in the hall" total="35%" percentage="40" [data]="cards4"></app-widget-card>
+<div *ngFor="let sensor of sensors" class="stats-cards" class="sensor-card">
+    <mat-card>
+        <app-widget-card [label]="sensor.name" [total]="sensor.data" [percentage]="getPercentage(toInt(sensor.recentData))" [data]="toInt(sensor.recentData)" [dimension]="sensor.dimension"></app-widget-card>
     </mat-card>
 </div>
 

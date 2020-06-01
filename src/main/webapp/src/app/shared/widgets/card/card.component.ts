@@ -11,7 +11,8 @@ export class CardComponent implements OnInit {
 
   @Input() label: string;
   @Input() total: string;
-  @Input() percentage: string;
+  @Input() dimension: string;
+  @Input() percentage: number;
   @Input() data = [];
 
   Highcharts = Highcharts;

@@ -78,6 +78,10 @@ export class DeviceService {
     );
   }
 
+  publishOnOffMessage(deviceId: string, msg: string) {
+    return this.http.post(baseUrl + '/publishOnOffMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {}, { headers, responseType: 'text'});
+  }
+
   publishMessage(deviceId: string, msg: string) {
     return this.http.post(baseUrl + '/publishMessage' + '?deviceId=' + deviceId + '&msg=' + msg, {}, { headers, responseType: 'text'});
   }

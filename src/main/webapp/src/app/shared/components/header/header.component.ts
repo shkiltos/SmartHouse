@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.rand = this.getRandomInt(5);
+    this.rand = this.getRandomInt(3);
   }
 
   toggleSideBar() {
@@ -43,8 +43,6 @@ export class HeaderComponent implements OnInit {
       case 0: return ', wassup?';
       case 1: return ', wazzup?';
       case 2: return ', ssup?';
-      case 3: return ', r u high?';
-      case 4: return ', miss u';
     }
   }
 

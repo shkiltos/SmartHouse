@@ -2,6 +2,7 @@ package com.anton.smarthouse.services;
 
 import com.anton.smarthouse.devices.Device;
 import com.anton.smarthouse.devices.OnOffDevice;
+import com.anton.smarthouse.devices.ParameterDevice;
 import com.anton.smarthouse.devices.SensorDevice;
 import com.anton.smarthouse.model.DeviceEntity;
 import com.anton.smarthouse.model.UserEntity;
@@ -41,6 +42,7 @@ public class DeviceService {
     public DeviceEntity create(DeviceEntity device, String userId) {
         device.setUserId(userId);
         if (device.getSwitchPattern() == null) device.setSwitchPattern(DEFAULT_SWITCH_PATTERN);
+        device.setEnergyConsumption(device.getEnergyConsumption() == null ? 0 : device.getEnergyConsumption() < 0 ? 0 : device.getEnergyConsumption());
         return deviceRepository.save(device);
     }
 
@@ -60,6 +62,7 @@ public class DeviceService {
         device.setId(id);
         device.setUserId(userId);
         if (device.getSwitchPattern() == null) device.setSwitchPattern(DEFAULT_SWITCH_PATTERN);
+        device.setEnergyConsumption(device.getEnergyConsumption() == null ? 0 : device.getEnergyConsumption() < 0 ? 0 : device.getEnergyConsumption());
         return deviceRepository.save(device);
     }
 
@@ -67,7 +70,7 @@ public class DeviceService {
         deviceRepository.deleteById(deviceId);
     }
 
-    public String publishMessage(UserEntity user, String deviceId, String msg) {
+    public String publishOnOffMessage(UserEntity user, String deviceId, String msg) {
         List<OnOffDevice> activeDevices = userDevices.get(user.getEmail()).stream().filter(d -> d instanceof OnOffDevice).map(d -> (OnOffDevice) d).collect(Collectors.toList());
         Optional<OnOffDevice> device = activeDevices.stream().filter(d -> d.getId().equals(deviceId)).findFirst();
         if (device.isPresent()) {
@@ -79,6 +82,20 @@ public class DeviceService {
                     }
                 }
                 onOffDevice.publish(msg);
+                return msg;
+            } catch (MqttException e) {
+                log.error("publish error");
+            }
+        }
+        return "bad";
+    }
+
+    public String publishMessage(UserEntity user, String deviceId, String msg) {
+        Optional<Device> device = userDevices.get(user.getEmail()).stream().filter(d -> d.getId().equals(deviceId)).findFirst();
+        if (device.isPresent()) {
+            Device d = device.get();
+            try {
+                d.publish(msg);
                 return msg;
             } catch (MqttException e) {
                 log.error("publish error");
@@ -166,15 +183,21 @@ public class DeviceService {
         switch (deviceEntity.getType()) {
             case "onoffdevice": {
                 OnOffDevice onOffDevice = new OnOffDevice(deviceEntity.getId(), deviceEntity.getState(), deviceEntity.getTopic(), deviceEntity.getSwitchPattern(), deviceEntity.getEnergyConsumption(), this);
-                onOffDevice.subscribe();
-                log.info("Connected onoffdevice: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
+//                onOffDevice.subscribe();
+                log.info("Connected On-Off Device: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
                 return onOffDevice;
             }
             case "sensor": {
                 SensorDevice sensorDevice = new SensorDevice(deviceEntity.getId(), deviceEntity.getTopic(), this);
                 sensorDevice.subscribe();
-                log.info("Connected sensor: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
+                log.info("Connected Sensor: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
                 return sensorDevice;
+            }
+            case "paramdevice": {
+                ParameterDevice paramDevice = new ParameterDevice(deviceEntity.getId(), deviceEntity.getState(), deviceEntity.getTopic(), deviceEntity.getEnergyConsumption(), this);
+//                paramDevice.subscribe();
+                log.info("Connected Parameter Device: \"" + deviceEntity.getName() + "\" for " + user.getEmail());
+                return paramDevice;
             }
         }
         return null;

@@ -35,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AlertComponent } from './dialogs/alert/alert.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReportService } from './services/report.service';
+import { ParamdeviceComponent } from './widgets/paramdevice/paramdevice.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ReportService } from './services/report.service';
     AddDialogComponent,
     EditDialogComponent,
     DeleteDialogComponent,
-    AlertComponent
+    AlertComponent,
+    ParamdeviceComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +84,8 @@ import { ReportService } from './services/report.service';
     CardComponent,
     PieComponent,
     OnoffdeviceComponent,
-    SensorComponent
+    SensorComponent,
+    ParamdeviceComponent
   ],
   entryComponents: [
     AddDialogComponent,

@@ -28,7 +28,7 @@ export class OnoffdeviceComponent implements OnInit {
 
   toggle() {
     if (this.device.state === this.offState || this.device.state === null) {
-      this.deviceService.publishMessage(this.device.id, this.onState).subscribe( response => {
+      this.deviceService.publishOnOffMessage(this.device.id, this.onState).subscribe( response => {
         if (this.exeeds(response)) {
           this.openAlert(outOfEnergyLimit);
         } else {
@@ -36,7 +36,7 @@ export class OnoffdeviceComponent implements OnInit {
         }
       });
     } else {
-      this.deviceService.publishMessage(this.device.id, this.offState).subscribe( response => {
+      this.deviceService.publishOnOffMessage(this.device.id, this.offState).subscribe( response => {
         this.device.state = this.offState;
       });
     }

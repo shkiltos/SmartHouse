@@ -1,6 +1,7 @@
 export const deviceTypes  = [
                                 { name: 'On/Off device', value: 'onoffdevice'} ,
-                                { name: 'Sensor', value: 'sensor'}
+                                { name: 'Sensor', value: 'sensor'},
+                                { name: 'Parameter device', value: 'paramdevice'}
                             ];
 
 export const dimension = ['˚C', '˚F', '%', 'm/s', 'kw/h'];

@@ -25,12 +25,12 @@ public class ScheduledTasks {
         this.deviceService = deviceService;
     }
 
-    @Scheduled(fixedRate = 106000)    //fixed delay
-    public void reportCurrentTime() {
-        System.out.println("The time is now " + dateFormat.format(new Date()));
-    }
+//    @Scheduled(fixedRate = 106000)    //fixed delay
+//    public void reportCurrentTime() {
+//        System.out.println("The time is now " + dateFormat.format(new Date()));
+//    }
 
-    @Scheduled(fixedRate = 15000)
+    @Scheduled(fixedRate = 30000)
     public void askAllSensors() {
         deviceService.userDevices.forEach((email, dList) -> {
             dList.forEach(d -> {

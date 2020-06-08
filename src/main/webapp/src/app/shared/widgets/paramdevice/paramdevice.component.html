@@ -1,0 +1,16 @@
+<div class="text">
+    <h4 matTooltipPosition="above" [matTooltip]="device.description">{{ device.name }}</h4>
+
+    <span class="topic">
+        topic: {{ device.topic }} 
+        <img *ngIf="device.image !== null" class="device-image" [matTooltip]="device.description" [src]="imageName" onerror="this.style.display='none'">
+    </span>
+    
+    <div>State: {{device.state ? device.state : 'off'}}</div>
+
+    <mat-form-field class="form-field button-group">
+        <mat-label>Parameter</mat-label>
+        <input matInput type="text" [(ngModel)]="stateToSend">
+        <mat-icon matSuffix class="unselectable clickable send-icon" (click)="sendParam()">send</mat-icon>
+    </mat-form-field>
+</div>

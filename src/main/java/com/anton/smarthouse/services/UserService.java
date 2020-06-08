@@ -23,7 +23,9 @@ public class UserService {
 
     public UserSettings updateSettings(UserSettings settings) {
         UserEntity user = getUser();
-        user.setMaxEnergyConsumption(settings.getMaxEnergyConsumption());
+        double mec = settings.getMaxEnergyConsumption();
+        if (mec < 0) user.setMaxEnergyConsumption((double)0);
+        else user.setMaxEnergyConsumption(mec);
         user.setName(settings.getUserName());
         user.setPicture(settings.getPicture());
         user.setCams(settings.getCams());

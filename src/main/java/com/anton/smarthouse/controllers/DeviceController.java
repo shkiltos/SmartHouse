@@ -108,6 +108,13 @@ public class DeviceController {
         deviceService.delete(deviceId);
     }
 
+    @PostMapping("/publishOnOffMessage")
+    public ResponseEntity<String> publishOnOffMessage(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
+        UserEntity user = userService.getUser();
+        if (user == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(deviceService.publishOnOffMessage(user, deviceId, message));
+    }
+
     @PostMapping("/publishMessage")
     public ResponseEntity<String> publishMessage(@RequestParam(value = "deviceId") String deviceId, @RequestParam(value = "msg") String message) {
         UserEntity user = userService.getUser();

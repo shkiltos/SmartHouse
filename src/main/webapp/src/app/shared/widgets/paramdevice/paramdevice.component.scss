@@ -32,6 +32,14 @@ h4 {
     padding: 10px;
 }
 
+.device-image:hover {
+    cursor: grab;
+}
+
+.device-image:active {
+    cursor: grabbing;
+}
+
 .info {
     height: 50px;
 }

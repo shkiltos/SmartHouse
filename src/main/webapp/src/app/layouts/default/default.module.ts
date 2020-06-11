@@ -22,6 +22,8 @@ import { SettingsComponent } from 'src/app/modules/settings/settings.component';
 import { CameraComponent } from 'src/app/modules/camera/camera.component';
 import { FormsModule } from '@angular/forms';
 import { WikiComponent } from 'src/app/modules/wiki/wiki.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { WikiComponent } from 'src/app/modules/wiki/wiki.component';
     MatIconModule,
     MatButtonModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    DragDropModule,
+    SortablejsModule
   ],
   providers: []
 })

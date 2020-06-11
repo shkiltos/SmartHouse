@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { DeviceService } from '../../services/device.service';
 import { MatDialog } from '@angular/material/dialog';
-import { outOfEnergyLimit } from '../../dialogs/dialog.constants';
+import { outOfEnergyLimitMessage } from '../../dialogs/dialog.constants';
 import { IDevice } from '../../model/device';
 
 @Component({

@@ -1,12 +1,23 @@
 <div class="text">
-    <h4 matTooltipPosition="above" [matTooltip]="device.description">{{ device.name }}</h4>
+    <h4 matTooltipPosition="above" [matTooltip]="device.description">{{ device.name | slice:0:27 }}{{ device.name.length > 27 ? '&hellip;' : '' }}</h4>
 
     <span class="topic">
         topic: {{ device.topic }} 
-        <img *ngIf="device.image !== null" class="device-image" [matTooltip]="device.description" [src]="imageName" onerror="this.style.display='none'">
+        <img *ngIf="device.image !== null" class="device-image handle"
+            [matTooltip]="device.description"
+            [src]="imageName"
+            onerror="this.style.display='none'"
+            (mousedown)="$event.stopPropagation()"
+            (touchstart)="$event.stopPropagation()">
+
+        <mat-icon *ngIf="device.image == null" matListIcon
+            class="device-image handle"
+            (mousedown)="$event.stopPropagation()"
+            (touchstart)="$event.stopPropagation()">drag_handle
+        </mat-icon>
     </span>
     
-    <div>turned {{device.state ? 'on': 'off'}}</div>
+    <div class="topic">turned {{device.state === onState ? 'on': 'off'}}</div>
 
     <div class="button-group">
         <mat-icon [ngClass]="{'power-butt-on': device.state === onState}" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>

@@ -1,23 +1,23 @@
   
 <ng-template #onoffdeviceRef let-onoffdevice>
-    <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
+    <mat-card class="card" [ngClass]="{'disabledItem': isDisabled}">
         <app-widget-onoffdevice [device]="onoffdevice" [theme]="themeService.alternativeTheme"></app-widget-onoffdevice>
     </mat-card>
 </ng-template>
 <ng-template #sensorRef let-sensor>
-    <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
+    <mat-card class="card" [ngClass]="{'disabledItem': isDisabled}">
         <app-widget-sensor [device]="sensor" [theme]="themeService.alternativeTheme"></app-widget-sensor>
     </mat-card>
 </ng-template>
 <ng-template #paramdeviceRef let-paramdevice>
-    <mat-card fxFlex="25" class="card" [ngClass]="{'disabledItem': isDisabled}">
+    <mat-card class="card" [ngClass]="{'disabledItem': isDisabled}">
         <app-widget-paramdevice [device]="paramdevice" [theme]="themeService.alternativeTheme"></app-widget-paramdevice>
     </mat-card>
 </ng-template>
 
-<div *ngFor="let device of devices; let i=index">
-    
-    <div *ngIf="i % 4 == 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" class="cards-row">
+<div [sortablejs]="devices" class="gridLayout" 
+    [sortablejsOptions]="{ animation: 250, handle: '.handle' }">
+    <div class="grid-square" *ngFor="let device of devices; let i=index" >
         <ng-template [ngTemplateOutlet]="(
                         ( ( devices[i].type === 'onoffdevice' ) && onoffdeviceRef ) ||
                         ( ( devices[i].type === 'sensor' ) && sensorRef ) ||
@@ -25,30 +25,5 @@
                     )"
                     [ngTemplateOutletContext]="{ $implicit: devices[i] }">
         </ng-template>
-        <ng-template *ngIf="i + 1 < devices.length"
-                    [ngTemplateOutlet]="(
-                        ( ( devices[i + 1].type === 'onoffdevice' ) && onoffdeviceRef ) ||
-                        ( ( devices[i + 1].type === 'sensor' ) && sensorRef ) ||
-                        ( ( devices[i + 1].type === 'paramdevice' ) && paramdeviceRef )
-                    )"
-                    [ngTemplateOutletContext]="{ $implicit: devices[i + 1] }">
-        </ng-template>
-        <ng-template *ngIf="i + 2 < devices.length"
-                    [ngTemplateOutlet]="(
-                        ( ( devices[i + 2].type === 'onoffdevice' ) && onoffdeviceRef ) ||
-                        ( ( devices[i + 2].type === 'sensor' ) && sensorRef ) ||
-                        ( ( devices[i + 2].type === 'paramdevice' ) && paramdeviceRef )
-                    )"
-                    [ngTemplateOutletContext]="{ $implicit: devices[i + 2] }">
-        </ng-template>
-        <ng-template *ngIf="i + 3 < devices.length"
-                    [ngTemplateOutlet]="(
-                        ( ( devices[i + 3].type === 'onoffdevice' ) && onoffdeviceRef ) ||
-                        ( ( devices[i + 3].type === 'sensor' ) && sensorRef ) ||
-                        ( ( devices[i + 3].type === 'paramdevice' ) && paramdeviceRef )
-                    )"
-                    [ngTemplateOutletContext]="{ $implicit: devices[i + 3] }">
-        </ng-template>
     </div>
-
 </div>

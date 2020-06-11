@@ -8,7 +8,7 @@ import { DefaultModule } from './layouts/default/default.module';
 import { ThemeService } from './shared/services/theme.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { WelcomeComponent } from './layouts/welcome/welcome.component';
-import { WikiComponent } from './modules/wiki/wiki.component';
+import { SortablejsModule } from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,10 @@ import { WikiComponent } from './modules/wiki/wiki.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     DefaultModule,
-    OverlayModule
+    OverlayModule,
+    SortablejsModule.forRoot({
+      animation: 200,
+    }),
   ],
   providers: [ThemeService],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@ import { DeviceService } from '../../services/device.service';
 import { IDevice } from '../../model/device';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { outOfEnergyLimit } from '../../dialogs/dialog.constants';
+import { outOfEnergyLimitMessage } from '../../dialogs/dialog.constants';
 
 @Component({
   selector: 'app-widget-onoffdevice',
@@ -30,7 +30,7 @@ export class OnoffdeviceComponent implements OnInit {
     if (this.device.state === this.offState || this.device.state === null) {
       this.deviceService.publishOnOffMessage(this.device.id, this.onState).subscribe( response => {
         if (this.exeeds(response)) {
-          this.openAlert(outOfEnergyLimit);
+          this.openAlert(outOfEnergyLimitMessage);
         } else {
           this.device.state = this.onState;
         }

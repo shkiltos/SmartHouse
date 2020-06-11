@@ -25,4 +25,11 @@ public class DeviceEntity {
     private List<String> recentData;
     private Double energyConsumption;
     private String image;
+
+    public DeviceEntity(String id, String name, String userId, String topic) {
+        this.id = id;
+        this.name = name;
+        this.userId = userId;
+        this.topic = topic;
+    }
 }

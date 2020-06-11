@@ -4,6 +4,7 @@ import com.anton.smarthouse.devices.Device;
 import com.anton.smarthouse.devices.OnOffDevice;
 import com.anton.smarthouse.devices.ParameterDevice;
 import com.anton.smarthouse.devices.SensorDevice;
+import com.anton.smarthouse.exception.NotFoundEntity;
 import com.anton.smarthouse.model.DeviceEntity;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.repository.DeviceRepository;
@@ -46,8 +47,8 @@ public class DeviceService {
         return deviceRepository.save(device);
     }
 
-    public Optional<DeviceEntity> findById(String deviceId) {
-        return deviceRepository.findById(deviceId);
+    public DeviceEntity findById(String deviceId) {
+        return deviceRepository.findById(deviceId).orElseThrow(() -> new NotFoundEntity(String.format("Device with id ${deviceId} not found")));
     }
 
     public List<DeviceEntity> findAll(String userId) {
@@ -55,7 +56,9 @@ public class DeviceService {
     }
 
     public List<DeviceEntity> findAllSensors(String userId) {
-        return deviceRepository.findDeviceEntitiesByUserIdAndType(userId, "sensor");
+        List<DeviceEntity> sensors = deviceRepository.findDeviceEntitiesByUserIdAndType(userId, "sensor");
+        if (sensors.size() == 0) throw new NotFoundEntity(String.format("No sensors found for user ${userId}"));
+        return sensors;
     }
 
     public DeviceEntity update(String id, DeviceEntity device, String userId) {
@@ -105,7 +108,7 @@ public class DeviceService {
     }
 
     public boolean updateData(String deviceId, String data, String previousData) {
-        Optional<DeviceEntity> deviceOptional = findById(deviceId);
+        Optional<DeviceEntity> deviceOptional = deviceRepository.findById(deviceId);
         if (!deviceOptional.isPresent()) return false;
         DeviceEntity device = deviceOptional.get();
         device.setData(data);
@@ -142,7 +145,7 @@ public class DeviceService {
     }
 
     public boolean updateState(String deviceId, String state) {
-        Optional<DeviceEntity> deviceOptional = findById(deviceId);
+        Optional<DeviceEntity> deviceOptional = deviceRepository.findById(deviceId);
         if (!deviceOptional.isPresent()) return false;
         DeviceEntity device = deviceOptional.get();
         device.setState(state);

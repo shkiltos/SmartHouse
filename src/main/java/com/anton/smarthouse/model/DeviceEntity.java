@@ -22,7 +22,6 @@ public class DeviceEntity {
     private String switchPattern;
     private String description;
     private String data;
-    private List<String> recentData;
     private Double energyConsumption;
     private String image;
 

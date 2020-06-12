@@ -6,14 +6,19 @@ import com.anton.smarthouse.devices.ParameterDevice;
 import com.anton.smarthouse.devices.SensorDevice;
 import com.anton.smarthouse.exception.NotFoundEntity;
 import com.anton.smarthouse.model.DeviceEntity;
+import com.anton.smarthouse.model.HistoryItemEntity;
+import com.anton.smarthouse.model.SensorReport;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.repository.DeviceRepository;
+import com.anton.smarthouse.repository.HistoryRepository;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -34,10 +39,12 @@ public class DeviceService {
     public static final ConcurrentMap<String, List<Device>> userDevices = new ConcurrentHashMap<>();
 
     private final DeviceRepository deviceRepository;
+    private final HistoryRepository historyRepository;
 
     @Autowired
-    public DeviceService(DeviceRepository deviceRepository) {
+    public DeviceService(DeviceRepository deviceRepository, HistoryRepository historyRepository) {
         this.deviceRepository = deviceRepository;
+        this.historyRepository = historyRepository;
     }
 
     public DeviceEntity create(DeviceEntity device, String userId) {
@@ -55,10 +62,14 @@ public class DeviceService {
         return deviceRepository.findDeviceEntitiesByUserId(userId);
     }
 
-    public List<DeviceEntity> findAllSensors(String userId) {
+    public List<SensorReport> getSensorReports(String userId) {
         List<DeviceEntity> sensors = deviceRepository.findDeviceEntitiesByUserIdAndType(userId, "sensor");
         if (sensors.size() == 0) throw new NotFoundEntity(String.format("No sensors found for user ${userId}"));
-        return sensors;
+        return sensors.stream().map(d -> new SensorReport(d.getId(), d.getName(), d.getData(), getSensorRecentData(d.getId()))).collect(Collectors.toList());
+    }
+
+    private List<String> getSensorRecentData(String deviceId) {
+        return Lists.reverse(historyRepository.findTop5ByDeviceIdOrderByDateDesc(deviceId).stream().map(historyItem -> historyItem.getState()).collect(Collectors.toList()));
     }
 
     public DeviceEntity update(String id, DeviceEntity device, String userId) {
@@ -113,34 +124,19 @@ public class DeviceService {
         DeviceEntity device = deviceOptional.get();
         device.setData(data);
 
-        // 4 recent except current
 //        List<String> deviceList = device.getRecentData();
 //        if (deviceList == null) {
-//            if (previousData != null) {
-//                deviceList = new ArrayList<>();
-//                deviceList.add(previousData);
-//                device.setRecentData(deviceList.stream().collect(Collectors.toList()));
-//            }
+//            deviceList = new ArrayList<>();
+//            deviceList.add(data);
+//            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
 //        } else {
-//            if (previousData != null) {
-//                deviceList.add(previousData);
-//                if (deviceList.size() > 4) deviceList.remove(0);
-//                device.setRecentData(deviceList.stream().collect(Collectors.toList()));
-//            }
+//            deviceList.add(data);
+//            if (deviceList.size() > 4) deviceList.remove(0);
+//            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
 //        }
 
-        List<String> deviceList = device.getRecentData();
-        if (deviceList == null) {
-            deviceList = new ArrayList<>();
-            deviceList.add(data);
-            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
-        } else {
-            deviceList.add(data);
-            if (deviceList.size() > 4) deviceList.remove(0);
-            device.setRecentData(deviceList.stream().collect(Collectors.toList()));
-        }
-
         deviceRepository.save(device);
+        historyRepository.save(new HistoryItemEntity(deviceId, data, LocalDateTime.now()));
         return true;
     }
 

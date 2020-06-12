@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from 'src/app/shared/services/report.service';
 import { IDevice } from 'src/app/shared/model/device';
+import { SensorReport } from 'src/app/shared/model/sensor.report';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { IDevice } from 'src/app/shared/model/device';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-  sensors: IDevice[];
+  sensors: SensorReport[];
 
   bigChart = [];
 
@@ -30,7 +31,7 @@ export class ReportsComponent implements OnInit {
     return recentData ? 100 * (recentData[recentData.length - 1] - recentData[0]) / recentData[0] : null;
   }
 
-  toInt(stringArray: string[]) {
+  toFloat(stringArray: string[]) {
     return stringArray ? stringArray.map( str => parseFloat(str)) : null;
   }
 }

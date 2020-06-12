@@ -8,9 +8,9 @@
 
 <br>
 
-<div *ngFor="let sensor of sensors" class="stats-cards" class="sensor-card">
-    <mat-card>
-        <app-widget-card [label]="sensor.name" [total]="sensor.data" [percentage]="getPercentage(toInt(sensor.recentData))" [data]="toInt(sensor.recentData)" [dimension]="sensor.dimension"></app-widget-card>
+<div class="stats-cards">
+    <mat-card class="sensor-card" *ngFor="let sensor of sensors">
+        <app-widget-card [label]="sensor.name" [total]="sensor.data" [percentage]="getPercentage(toFloat(sensor.recentData))" [data]="toFloat(sensor.recentData)" [dimension]="sensor.dimension"></app-widget-card>
     </mat-card>
 </div>
 
@@ -21,13 +21,7 @@
 <br>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <div fxFlex="60">
-        
-
-    </div>
-    <div fxFlex="40">
-        <app-widget-pie [data]="pieChart"></app-widget-pie>
-    </div>
+    <app-widget-pie [data]="pieChart"></app-widget-pie>
 </div>
 
 <br>

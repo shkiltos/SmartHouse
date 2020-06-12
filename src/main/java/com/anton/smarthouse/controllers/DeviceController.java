@@ -2,6 +2,7 @@ package com.anton.smarthouse.controllers;
 
 import com.anton.smarthouse.exception.NotFoundEntity;
 import com.anton.smarthouse.model.DeviceEntity;
+import com.anton.smarthouse.model.SensorReport;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.services.DeviceService;
 import com.anton.smarthouse.services.UserService;
@@ -62,10 +63,10 @@ public class DeviceController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Sensors found: ", response = DeviceEntity.class),
             @ApiResponse(code = 404, message = "Exception occurred : ", response = String.class)})
-    public List<DeviceEntity> findAllSensors() {
+    public List<SensorReport> getSensorReports() {
         UserEntity user = userService.getUser();
         if (user == null) new NotFoundEntity(String.format("User not found"));
-        return deviceService.findAllSensors(user.getId());
+        return deviceService.getSensorReports(user.getId());
     }
 
     @ResponseStatus(HttpStatus.OK)

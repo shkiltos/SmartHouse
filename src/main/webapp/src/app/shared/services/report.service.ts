@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IDevice } from '../model/device';
+import { SensorReport } from '../model/sensor.report';
 
 const baseUrl = '/api/devices';
 
@@ -12,7 +13,7 @@ export class ReportService {
   constructor(private http: HttpClient) { }
 
   fetchSensorData() {
-    return this.http.get<IDevice[]>(baseUrl + '/sensors');
+    return this.http.get<SensorReport[]>(baseUrl + '/sensors');
   }
 
   bigChart() {

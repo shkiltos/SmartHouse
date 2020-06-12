@@ -18,8 +18,6 @@ public class ScheduledTasks {
 
     private final DeviceService deviceService;
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     @Autowired
     public ScheduledTasks(DeviceService deviceService) {
         this.deviceService = deviceService;

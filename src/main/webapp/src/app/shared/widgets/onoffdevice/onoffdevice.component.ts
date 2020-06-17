@@ -13,6 +13,7 @@ import { outOfEnergyLimitMessage } from '../../dialogs/dialog.constants';
 export class OnoffdeviceComponent implements OnInit {
   @Input() device: IDevice;
   @Input() theme: boolean;
+  @Input() mini = false;
   onState: string;
   offState: string;
 

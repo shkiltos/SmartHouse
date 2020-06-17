@@ -2,7 +2,7 @@ package com.anton.smarthouse.controllers;
 
 import com.anton.smarthouse.exception.NotFoundEntity;
 import com.anton.smarthouse.model.DeviceEntity;
-import com.anton.smarthouse.model.SensorReport;
+import com.anton.smarthouse.model.dto.SensorReport;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.services.DeviceService;
 import com.anton.smarthouse.services.UserService;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin

@@ -9,22 +9,21 @@ h4 {
   
 .mat-icon {
     position: relative;
-    padding: 0 20px;
-    top: 5px;
+    padding: 0 0.4em;
+    top: 0.2em;
 }
 
 .button-group {
-    margin-top: 1rem;
     text-align: center;
 }
 
 .power-icon {
-    font-size: 3rem;
+    font-size: 3em;
     font-weight: bold;
 }
 
 .device-image {
-    font-size: 24px;
+    font-size: 1.8em;
     top: 0px;
     right: 0px;
     position: absolute;
@@ -39,14 +38,10 @@ h4 {
     cursor: grabbing;
 }
 
-.info {
-    height: 50px;
-}
-
 .indication {
-    font-size: 3.2rem;
+    font-size: 3.2em;
 }
 
 .topic {
-    font-size: 0.8rem;
+    font-size: 0.8em;
 }

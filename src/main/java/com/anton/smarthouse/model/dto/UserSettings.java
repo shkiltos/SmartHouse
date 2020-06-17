@@ -1,5 +1,6 @@
-package com.anton.smarthouse.model;
+package com.anton.smarthouse.model.dto;
 
+import com.anton.smarthouse.model.Camera;
 import lombok.Data;
 
 import java.util.List;

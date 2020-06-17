@@ -1,7 +1,7 @@
 package com.anton.smarthouse.services;
 
 import com.anton.smarthouse.model.UserEntity;
-import com.anton.smarthouse.model.UserSettings;
+import com.anton.smarthouse.model.dto.UserSettings;
 import com.anton.smarthouse.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

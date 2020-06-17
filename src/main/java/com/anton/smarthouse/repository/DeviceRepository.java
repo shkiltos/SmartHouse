@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface DeviceRepository extends MongoRepository<DeviceEntity, String> {
-
     List<DeviceEntity> findDeviceEntitiesByUserId(String id);
     List<DeviceEntity> findDeviceEntitiesByUserIdAndType(String id, String type);
 }

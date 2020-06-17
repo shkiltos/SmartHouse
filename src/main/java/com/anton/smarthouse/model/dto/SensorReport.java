@@ -1,4 +1,4 @@
-package com.anton.smarthouse.model;
+package com.anton.smarthouse.model.dto;
 
 import lombok.Data;
 

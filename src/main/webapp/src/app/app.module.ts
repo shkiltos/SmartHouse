@@ -9,6 +9,7 @@ import { ThemeService } from './shared/services/theme.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { WelcomeComponent } from './layouts/welcome/welcome.component';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { SchemeComponent } from './modules/scheme/scheme.component';
 
 @NgModule({
   declarations: [

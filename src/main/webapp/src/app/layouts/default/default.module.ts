@@ -11,6 +11,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DevicesComponent } from 'src/app/modules/devices/devices.component';
@@ -20,16 +21,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { MainComponent } from 'src/app/modules/main/main.component';
 import { SettingsComponent } from 'src/app/modules/settings/settings.component';
 import { CameraComponent } from 'src/app/modules/camera/camera.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { WikiComponent } from 'src/app/modules/wiki/wiki.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SortablejsModule } from 'ngx-sortablejs';
+import { SchemeComponent } from 'src/app/modules/scheme/scheme.component';
 
 @NgModule({
   declarations: [
     DefaultComponent,
     DevicesComponent,
     DashboardComponent,
+    SchemeComponent,
     ReportsComponent,
     MainComponent,
     SettingsComponent,
@@ -53,7 +56,9 @@ import { SortablejsModule } from 'ngx-sortablejs';
     MatSelectModule,
     FormsModule,
     DragDropModule,
-    SortablejsModule
+    SortablejsModule,
+    MatTabsModule,
+    ReactiveFormsModule
   ],
   providers: []
 })

@@ -2,7 +2,7 @@
 <div class="container">
   
     <form (ngSubmit)="submit" #formControl="ngForm">
-      <span mat-dialog-title style="font-weight: 800; vertical-align: sub;">
+      <span mat-dialog-title style="font-weight: 800;">
         <span>Change user settings</span>
         <button mat-raised-button color="accent" style="float:right" [type]="submit" [disabled]="!formControl.valid" (click)="updateSettings(settings)">Save</button>
       </span>
@@ -30,7 +30,7 @@
         </mat-form-field>
       </div>
 
-      <button mat-raised-button (click)="addCamera()">Add camera</button>
+      <button mat-raised-button (click)="addCamera()" style="float: right">Add camera</button>
       <br>
       <br>
 

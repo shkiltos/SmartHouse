@@ -9,6 +9,7 @@ import { WelcomeComponent } from './layouts/welcome/welcome.component';
 import { SettingsComponent } from './modules/settings/settings.component';
 import { CameraComponent } from './modules/camera/camera.component';
 import { WikiComponent } from './modules/wiki/wiki.component';
+import { SchemeComponent } from './modules/scheme/scheme.component';
 
 
 const routes: Routes = [{
@@ -30,6 +31,10 @@ const routes: Routes = [{
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'scheme',
+    component: SchemeComponent
   },
   {
     path: 'reports',

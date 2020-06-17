@@ -1,9 +1,7 @@
 package com.anton.smarthouse.controllers;
 
-import com.anton.smarthouse.model.DeviceEntity;
 import com.anton.smarthouse.model.UserEntity;
-import com.anton.smarthouse.model.UserSettings;
-import com.anton.smarthouse.services.DeviceService;
+import com.anton.smarthouse.model.dto.UserSettings;
 import com.anton.smarthouse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

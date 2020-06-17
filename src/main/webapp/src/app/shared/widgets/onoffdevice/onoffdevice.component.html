@@ -1,24 +1,28 @@
-<div class="text">
-    <h4 matTooltipPosition="above" [matTooltip]="device.description">{{ device.name | slice:0:27 }}{{ device.name.length > 27 ? '&hellip;' : '' }}</h4>
+<div [ngStyle]="{'font-size': mini ? '14px' : 'initial'}">
+    <h4 matTooltipPosition="above" 
+    [matTooltip]="device.description"
+    [ngStyle]="{'text-align': mini ? 'center' : 'left'}">{{ device.name | slice:0:27 }}{{ device.name.length > 27 ? '&hellip;' : '' }}</h4>
 
-    <span class="topic">
+    <img *ngIf="device.image !== null && !mini" class="device-image handle"
+    [src]="imageName"
+    onerror="this.style.display='none'"
+    (mousedown)="$event.stopPropagation()"
+    (touchstart)="$event.stopPropagation()">
+
+    <mat-icon *ngIf="device.image == null && !mini" matListIcon
+        class="device-image handle"
+        (mousedown)="$event.stopPropagation()"
+        (touchstart)="$event.stopPropagation()">drag_handle
+    </mat-icon>
+
+    <span class="topic" *ngIf="!mini">
         topic: {{ device.topic }} 
-        <img *ngIf="device.image !== null" class="device-image handle"
-            [src]="imageName"
-            onerror="this.style.display='none'"
-            (mousedown)="$event.stopPropagation()"
-            (touchstart)="$event.stopPropagation()">
-
-        <mat-icon *ngIf="device.image == null" matListIcon
-            class="device-image handle"
-            (mousedown)="$event.stopPropagation()"
-            (touchstart)="$event.stopPropagation()">drag_handle
-        </mat-icon>
     </span>
     
-    <div class="topic">turned {{device.state === onState ? 'on': 'off'}}</div>
+    
+    <div *ngIf="!mini" class="topic">turned {{device.state === onState ? 'on': 'off'}}</div>
 
-    <div class="button-group">
+    <div class="button-group" [ngStyle]="{'margin-top': mini ? '0' : '1em'}">
         <mat-icon [ngClass]="{'power-butt-on': device.state === onState}" (click)="toggle()" class="unselectable clickable power-icon">power_settings_new</mat-icon>
     </div>
 </div>

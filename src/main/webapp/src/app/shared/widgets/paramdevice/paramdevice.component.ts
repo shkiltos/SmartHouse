@@ -13,6 +13,7 @@ import { IDevice } from '../../model/device';
 export class ParamdeviceComponent implements OnInit {
   @Input() device: IDevice;
   @Input() theme: boolean;
+  @Input() mini = false;
   onState: string;
   offState: string;
 

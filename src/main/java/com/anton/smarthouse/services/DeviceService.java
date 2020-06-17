@@ -7,7 +7,7 @@ import com.anton.smarthouse.devices.SensorDevice;
 import com.anton.smarthouse.exception.NotFoundEntity;
 import com.anton.smarthouse.model.DeviceEntity;
 import com.anton.smarthouse.model.HistoryItemEntity;
-import com.anton.smarthouse.model.SensorReport;
+import com.anton.smarthouse.model.dto.SensorReport;
 import com.anton.smarthouse.model.UserEntity;
 import com.anton.smarthouse.repository.DeviceRepository;
 import com.anton.smarthouse.repository.HistoryRepository;
@@ -15,7 +15,6 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,6 +38,7 @@ public class DeviceService {
     public static final ConcurrentMap<String, List<Device>> userDevices = new ConcurrentHashMap<>();
 
     private final DeviceRepository deviceRepository;
+
     private final HistoryRepository historyRepository;
 
     @Autowired

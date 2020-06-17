@@ -1,0 +1,97 @@
+<ng-template #onoffdeviceRef let-onoffdevice>
+    <mat-card class="card" [ngClass]="{'disabledItem': editMode}">
+        <app-widget-onoffdevice [device]="onoffdevice" [theme]="themeService.alternativeTheme" mini="true"></app-widget-onoffdevice>
+    </mat-card>
+</ng-template>
+<ng-template #sensorRef let-sensor>
+    <mat-card class="card" [ngClass]="{'disabledItem': editMode}">
+        <app-widget-sensor [device]="sensor" [theme]="themeService.alternativeTheme" mini="true"></app-widget-sensor>
+    </mat-card>
+</ng-template>
+<ng-template #paramdeviceRef let-paramdevice>
+    <mat-card class="card" [ngClass]="{'disabledItem': editMode}">
+        <app-widget-paramdevice [device]="paramdevice" [theme]="themeService.alternativeTheme" mini="true"></app-widget-paramdevice>
+    </mat-card>
+</ng-template>
+
+<div class="header">
+    <button mat-raised-button *ngIf="!editMode" class="example-add-tab-button header-element" (click)="addTab()">
+        Add new
+    </button>
+    <button mat-raised-button *ngIf="editMode" class="example-add-tab-button header-element" (click)="save()">
+        Save
+    </button>
+    <button mat-raised-button *ngIf="!editMode" class="example-add-tab-button header-element" (click)="switchToEditMode()" [disabled]="this.schemes.length === 0">
+        Edit
+    </button>
+    <button mat-raised-button *ngIf="editMode" class="example-add-tab-button header-element" (click)="cancelEditMode()">
+        Cancel
+    </button>
+    <mat-form-field class="header-element" color="accent">
+        <!-- <mat-label>Selected tab index</mat-label> -->
+        <!-- <input matInput type="number" [formControl]="selected"> -->
+        <mat-label>Scheme name</mat-label>
+        <input matInput [(ngModel)]="currentScheme.title" [disabled]="!editMode">
+    </mat-form-field>
+    <mat-form-field *ngIf="editMode" class="header-element" color="accent">
+        <mat-label>Add device</mat-label>
+        <mat-select>
+          <mat-option>Cancel</mat-option>
+          <mat-option *ngFor="let device of deviceList"
+           [value]="device"
+            (click)="addDeviceOnScheme(device)"
+            [disabled]="isDeviceListItemDisabled(device)">{{device.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <input  style="display: none;"
+            (change)="onFileSelected($event)"
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            #fileInput>
+    <button mat-raised-button *ngIf="editMode" class="header-element" (click)="fileInput.click()">
+        Upload file
+        <mat-icon *ngIf="currentScheme.image" style="font-size: 20px; margin-right:-7px">check</mat-icon>
+    </button>
+
+
+    
+</div>
+  
+  <mat-tab-group color="accent"
+                [selectedIndex]="selected.value"
+                (selectedIndexChange)="selectTab($event)"
+                style="height: 90%;">
+    <mat-tab *ngFor="let scheme of schemes; let index = index" [disabled]="editMode">
+        <ng-template mat-tab-label>
+            {{trimLong(scheme.title, 17)}}
+            <mat-icon  class="tab-icon clickable" (click)="removeTab(index, scheme.id)" >{{selected.value === index ? 'close' : ''}}</mat-icon>
+        </ng-template>
+        
+        <div [ngStyle]="{'background-image': getBackground()}" class="scheme example-boundary">
+
+            <div style="position: absolute;"
+                 class="mini-device"
+                 *ngFor="let device of schemeDevices; let i=index"
+                 cdkDragBoundary=".example-boundary"
+                 cdkDrag
+                 [cdkDragDisabled]="!editMode"
+                 [cdkDragFreeDragPosition]="getDragPosition(device)"
+                 (cdkDragEnded)="onDragEnded($event, device)"
+                 [ngStyle]="{'cursor': editMode ? 'move' : 'unset'}">
+                <ng-template [ngTemplateOutlet]="(
+                                ( ( schemeDevices[i].type === 'onoffdevice' ) && onoffdeviceRef ) ||
+                                ( ( schemeDevices[i].type === 'sensor' ) && sensorRef ) ||
+                                ( ( schemeDevices[i].type === 'paramdevice' ) && paramdeviceRef )
+                            )"
+                            [ngTemplateOutletContext]="{ $implicit: schemeDevices[i] }">
+                </ng-template>
+                <mat-icon *ngIf="editMode"
+                    class="delete-icon"
+                    (click)="removeDeviceFromScheme(i)">close
+                </mat-icon>
+            </div>
+        </div>
+        
+    </mat-tab>
+</mat-tab-group>

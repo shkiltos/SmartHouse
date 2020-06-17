@@ -34,3 +34,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .clickable:hover {
     cursor: pointer;
 }
+
+.mat-tab-body-wrapper {
+    flex-grow: 1;
+}
+
+.mat-tooltip {
+    font-size: 1.3rem;
+}

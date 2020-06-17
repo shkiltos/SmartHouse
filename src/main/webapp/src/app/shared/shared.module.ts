@@ -36,6 +36,7 @@ import { AlertComponent } from './dialogs/alert/alert.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReportService } from './services/report.service';
 import { ParamdeviceComponent } from './widgets/paramdevice/paramdevice.component';
+import { SchemeService } from './services/scheme.service';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { ParamdeviceComponent } from './widgets/paramdevice/paramdevice.componen
   providers: [
     DeviceService,
     UserService,
-    ReportService
+    ReportService,
+    SchemeService
   ]
 })
 export class SharedModule { }

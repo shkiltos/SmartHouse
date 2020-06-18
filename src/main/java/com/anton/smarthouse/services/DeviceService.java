@@ -65,7 +65,7 @@ public class DeviceService {
     public List<SensorReport> getSensorReports(String userId) {
         List<DeviceEntity> sensors = deviceRepository.findDeviceEntitiesByUserIdAndType(userId, "sensor");
         if (sensors.size() == 0) throw new NotFoundEntity(String.format("No sensors found for user ${userId}"));
-        return sensors.stream().map(d -> new SensorReport(d.getId(), d.getName(), d.getData(), getSensorRecentData(d.getId()))).collect(Collectors.toList());
+        return sensors.stream().map(d -> new SensorReport(d.getId(), d.getName(), d.getData(), d.getDimension(), getSensorRecentData(d.getId()))).collect(Collectors.toList());
     }
 
     private List<String> getSensorRecentData(String deviceId) {

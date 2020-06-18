@@ -107,6 +107,7 @@ export class SchemeComponent implements OnInit {
     if (this.selected.value === index) {
       this.schemeService.deleteScheme(id);
       this.schemes.splice(index, 1);
+      this.cancelEditMode();
     }
   }
 
@@ -118,6 +119,7 @@ export class SchemeComponent implements OnInit {
     this.editMode = false;
     if (this.creatingNewScheme) {
       this.schemes.splice(this.schemes.length - 1, 1);
+      this.creatingNewScheme = false;
     }
     this.refreshSchemes();
   }

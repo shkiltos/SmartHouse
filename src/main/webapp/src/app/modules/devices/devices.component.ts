@@ -26,8 +26,6 @@ export class DevicesComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               public deviceService: DeviceService) {
-    // // Create 100 users
-    // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
   }
 
   ngOnInit() {
